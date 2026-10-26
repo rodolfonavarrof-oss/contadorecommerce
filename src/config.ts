@@ -19,7 +19,7 @@ export const SITE = {
 export const WHATSAPP_NUMBER = '56978000715';
 
 // Formulario "Web contadorecommerce.cl - Newsletter" de MailerLite (suscribe al grupo "Leads newsletter",
-// con doble confirmación). Estos IDs son públicos: no son claves de API.
+// sin doble confirmación). Estos IDs son públicos: no son claves de API.
 export const MAILERLITE_ACCOUNT_ID = '2743908';
 export const MAILERLITE_FORM_ID = '202408847845885317';
 

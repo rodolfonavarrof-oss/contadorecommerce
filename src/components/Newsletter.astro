@@ -61,7 +61,7 @@ import { MAILERLITE_ACCOUNT_ID, MAILERLITE_FORM_ID } from '../config';
         const data = await res.json().catch(() => ({}));
         if (res.ok && data.success) {
           form.reset();
-          status.textContent = '¡Listo! Te enviamos un correo para confirmar la suscripción.';
+          status.textContent = '¡Listo! Ya estás suscrito. El próximo newsletter llega a tu correo.';
         } else if (data?.errors?.fields?.email) {
           status.textContent = 'Revisa tu correo, parece que tiene un error.';
         } else {
