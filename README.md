@@ -30,6 +30,7 @@ npm run build     # generar el sitio en la carpeta dist
 
 ## Configuración en Cloudflare
 
+- Proyecto de Workers conectado a este repositorio (rama `main`).
 - Build command: `npm run build`
-- Output directory: `dist`
+- Deploy command: `npx wrangler deploy` (lee `wrangler.jsonc`, que publica la carpeta `dist`).
 - Dominio personalizado: `contadorecommerce.cl` y `www.contadorecommerce.cl`
