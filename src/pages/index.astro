@@ -85,7 +85,7 @@ a{color:#0034D3}a:hover{color:#002699}
 @media (prefers-reduced-motion:reduce){.draw path,.draw circle{animation:none;stroke-dasharray:none}}
 :focus-visible{outline:3px solid #0034D3;outline-offset:3px}
 
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
 section{overflow-x:clip}
 @media (max-width:560px){.kv{font-size:18px!important}header.wrap{gap:12px!important}header.wrap a:first-child{font-size:21px!important}}
 img{max-width:100%}
@@ -95,7 +95,8 @@ img{max-width:100%}
 <div style="min-width: 0">
 
 <!-- NAV -->
-<header class="wrap" style="display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-block: 20px">
+<div class="topbar" style="position: sticky; top: 0; z-index: 50; padding-top: env(safe-area-inset-top, 0px); background: rgba(255,255,255,0.94); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-bottom: 1px solid #E3E1DA">
+<header class="wrap" style="display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-block: 12px">
   <a href="#inicio" aria-label="contador.ecommerce, inicio" style="text-decoration: none; color: #0B1533; font-family: 'Host Grotesk', sans-serif; font-size: 24px; letter-spacing: -0.045em; white-space: nowrap"><b style="font-weight: 700">contador</b><b style="font-weight: 700; color: #0034D3">.</b><span style="font-weight: 400; color: #4A5068">ecommerce</span></a>
   <nav class="navlinks" style="display: flex; gap: 32px; font-size: 15px">
     <a href="#recibes" style="color: #4A5068; text-decoration: none">Servicio</a>
@@ -105,6 +106,7 @@ img{max-width:100%}
   </nav>
   <a href={wa} style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 12px; background: #0034D3; color: #FFFFFF; text-decoration: none; font-weight: 500; font-size: 15px; white-space: nowrap">Comienza ahora</a>
 </header>
+</div>
 
 <!-- HERO -->
 <section id="inicio" class="wrap" style="padding-block: 64px 72px">
