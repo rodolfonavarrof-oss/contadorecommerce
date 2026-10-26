@@ -11,7 +11,7 @@ Completa en `src/config.ts`:
 
 Y en `src/pages/privacidad.astro` y `src/pages/terminos.astro`, los datos entre corchetes (razón social, RUT, correo, plazos).
 
-La foto: reemplaza el recuadro `[FOTO DE RODOLFO]` en `src/pages/index.astro` por `<img src="/rodolfo.jpg" alt="Rodolfo Navarro">` y deja la foto en `public/rodolfo.jpg`.
+La foto de la sección "Quién está detrás" es `public/rodolfo.jpg` (4:5). Para cambiarla, reemplaza ese archivo con el mismo nombre.
 
 ## Publicar un artículo del blog
 
