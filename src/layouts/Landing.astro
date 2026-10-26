@@ -1,0 +1,69 @@
+---
+// Layout de la portada nueva (rediseño oct-2026): mismo SEO que Base, sin el header/footer antiguos.
+import { SITE } from '../config';
+
+interface Props {
+  title: string;
+  description?: string;
+  schema?: object[];
+}
+
+const { title, description = SITE.description, schema = [] } = Astro.props;
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
+const fullTitle = title === SITE.name ? `${SITE.name} · ${SITE.tagline}` : `${title} · ${SITE.name}`;
+
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'AccountingService',
+  '@id': `${SITE.url}/#negocio`,
+  name: SITE.name,
+  url: SITE.url,
+  description: SITE.description,
+  areaServed: { '@type': 'Country', name: 'Chile' },
+  address: { '@type': 'PostalAddress', addressLocality: SITE.city, addressCountry: SITE.country },
+  founder: {
+    '@type': 'Person',
+    '@id': `${SITE.founder.url}/#persona`,
+    name: SITE.founder.name,
+    jobTitle: SITE.founder.role,
+    url: SITE.founder.url,
+    image: `${SITE.url}/rodolfo.jpg`,
+  },
+  knowsAbout: [
+    'Contabilidad para e-commerce',
+    'Factura de compra de servicios digitales',
+    'IVA y F29',
+    'Shopify',
+    'Mercado Libre',
+    'ROAS y rentabilidad de tiendas online',
+  ],
+};
+---
+<!doctype html>
+<html lang="es-CL">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0034D3" />
+  <title>{fullTitle}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content={SITE.name} />
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:locale" content="es_CL" />
+  <meta name="twitter:card" content="summary" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="sitemap" href="/sitemap-index.xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;700&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" />
+  <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
+  {schema.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
+</head>
+<body>
+  <slot />
+</body>
+</html>

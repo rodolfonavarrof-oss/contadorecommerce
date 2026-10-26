@@ -1,7 +1,6 @@
 ---
-import Base from '../layouts/Base.astro';
-import Newsletter from '../components/Newsletter.astro';
-import { SITE, PLANS, FAQS, whatsappLink } from '../config';
+import Landing from '../layouts/Landing.astro';
+import { SITE, PLANS, FAQS, whatsappLink, MAILERLITE_ACCOUNT_ID, MAILERLITE_FORM_ID } from '../config';
 
 const wa = whatsappLink();
 
@@ -38,199 +37,540 @@ const faqSchema = {
   })),
 };
 ---
-<Base title={SITE.name} schema={[offerSchema, faqSchema]}>
-  <section class="container hero" id="inicio">
-    <div class="hero-copy">
-      <p class="eyebrow">Contabilidad para tiendas online en Chile</p>
-      <h1 class="h1">Tus números claros cada mes. Y entiendes por qué.</h1>
-      <p class="lead">Llevamos tu contabilidad al día y te enseñamos a leerla. En pocos meses sabes cuánto ganas, cómo se mueve tu negocio y cuánto puedes invertir.</p>
-      <div class="actions">
-        <a href={wa} class="btn btn-primary">
-          <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.4A8.4 8.4 0 1 1 21 11.5z"></path></svg>
-          Hablemos por WhatsApp
+<Landing title={SITE.name} schema={[offerSchema, faqSchema]}>
+<style is:global>
+
+body{margin:0;background:#FFFFFF;color:#0B1533;font-family:'Geist',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#0034D3}a:hover{color:#002699}
+.wrap{max-width:1200px;margin:0 auto;padding-inline:max(20px,4vw)}
+.hero{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:56px;align-items:center}
+.bento{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px}
+.span3{grid-column:span 3}.span2{grid-column:span 2}.span4{grid-column:span 4}
+.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.four{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.split{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:48px;align-items:center}
+.logos{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:12px}
+@media (max-width:960px){.hero,.split{grid-template-columns:minmax(0,1fr);gap:40px}.span3,.span2,.span4{grid-column:span 6}.three{grid-template-columns:minmax(0,1fr)}.four{grid-template-columns:repeat(2,minmax(0,1fr))}.logos{grid-template-columns:repeat(4,minmax(0,1fr))}.navlinks{display:none!important}.float{display:none!important}}
+@media (max-width:560px){.four{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:960px){.steps3{grid-template-columns:minmax(0,1fr)!important;gap:12px!important}.steps3 .arrow{transform:rotate(90deg);height:36px}}
+.cmp{width:100%;border-collapse:collapse;font-size:14px;min-width:720px}
+.cmp th,.cmp td{padding:13px 12px;border-bottom:1px solid #E3E1DA;text-align:center}
+.cmp th[scope=row]{text-align:left;font-weight:500;color:#33384D}
+.cmp thead th{font-size:15px;font-weight:600;padding-block:16px}
+.cmp .hl{background:#EAF1FF}
+.yes{color:#0034D3;font-weight:600}.no{color:#B9BBC8}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.8)}}
+@keyframes ring{0%{box-shadow:0 0 0 0 rgba(0,52,211,.45)}100%{box-shadow:0 0 0 10px rgba(0,52,211,0)}}
+@keyframes tick{0%,12%{opacity:0;transform:scale(.4)}22%,88%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1)}}
+@keyframes rowin{0%,12%{background:#FFFFFF}22%,88%{background:#EEF4FF}100%{background:#FFFFFF}}
+@keyframes grow{0%{width:4%}70%,100%{width:100%}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.live{animation:pulse 1.6s ease-in-out infinite}
+.ring{animation:ring 1.8s ease-out infinite}
+.t1,.t2,.t3,.t4{animation:tick 6s ease-out infinite both}
+.t2{animation-delay:.9s}.t3{animation-delay:1.8s}.t4{animation-delay:2.7s}
+.r1,.r2,.r3,.r4{animation:rowin 6s ease-out infinite both}
+.r2{animation-delay:.9s}.r3{animation-delay:1.8s}.r4{animation-delay:2.7s}
+.bar{animation:grow 5s ease-in-out infinite alternate}
+.fl1{animation:floaty 5s ease-in-out infinite}.fl2{animation:floaty 6s ease-in-out .8s infinite}
+@media (prefers-reduced-motion:reduce){.live,.ring,.t1,.t2,.t3,.t4,.r1,.r2,.r3,.r4,.bar,.fl1,.fl2{animation:none;opacity:1}}
+@keyframes rot{0%,18%{transform:translateY(0)}25%,43%{transform:translateY(-1.5em)}50%,68%{transform:translateY(-3em)}75%,93%{transform:translateY(-4.5em)}100%{transform:translateY(-6em)}}
+.rot-in{animation:rot 10s cubic-bezier(.7,0,.3,1) infinite}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.marquee{animation:marquee 32s linear infinite}
+@media (prefers-reduced-motion:reduce){.rot-in,.marquee{animation:none}}
+.dd path,.dd circle{fill:none;stroke:currentColor;stroke-width:9;stroke-linecap:round;stroke-linejoin:round}
+@keyframes draw{0%{stroke-dashoffset:1}35%,100%{stroke-dashoffset:0}}
+.draw path,.draw circle{stroke-dasharray:1;animation:draw 7s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.draw path,.draw circle{animation:none;stroke-dasharray:none}}
+:focus-visible{outline:3px solid #0034D3;outline-offset:3px}
+
+html{scroll-behavior:smooth}
+section{overflow-x:clip}
+@media (max-width:560px){.kv{font-size:18px!important}header.wrap{gap:12px!important}header.wrap a:first-child{font-size:21px!important}}
+img{max-width:100%}
+</style>
+
+
+<div style="min-width: 0">
+
+<!-- NAV -->
+<header class="wrap" style="display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-block: 20px">
+  <a href="#inicio" aria-label="contador.ecommerce, inicio" style="text-decoration: none; color: #0B1533; font-family: 'Host Grotesk', sans-serif; font-size: 24px; letter-spacing: -0.045em; white-space: nowrap"><b style="font-weight: 700">contador</b><b style="font-weight: 700; color: #0034D3">.</b><span style="font-weight: 400; color: #4A5068">ecommerce</span></a>
+  <nav class="navlinks" style="display: flex; gap: 32px; font-size: 15px">
+    <a href="#recibes" style="color: #4A5068; text-decoration: none">Servicio</a>
+    <a href="#planes" style="color: #4A5068; text-decoration: none">Planes</a>
+    <a href="#rodolfo" style="color: #4A5068; text-decoration: none">Nosotros</a>
+    <a href="#newsletter" style="color: #4A5068; text-decoration: none">Newsletter</a>
+  </nav>
+  <a href={wa} style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 12px; background: #0034D3; color: #FFFFFF; text-decoration: none; font-weight: 500; font-size: 15px; white-space: nowrap">Comienza ahora</a>
+</header>
+
+<!-- HERO -->
+<section id="inicio" class="wrap" style="padding-block: 64px 72px">
+  <div class="hero">
+    <div style="display: flex; flex-direction: column; gap: 28px; min-width: 0">
+      <p style="margin: 0; align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; background: #EAF1FF; color: #0034D3; font-size: 13px; font-weight: 500"><span class="live" aria-hidden="true" style="width: 7px; height: 7px; border-radius: 50%; background: #0034D3"></span>Contabilidad para tiendas online</p>
+      <p style="margin: 0; display: flex; align-items: center; gap: 10px; font-size: 18px; color: #4A5068">Para
+        <span class="rot" style="display: inline-block; height: 1.5em; overflow: hidden; vertical-align: bottom"><span class="rot-in" style="display: flex; flex-direction: column; color: #0034D3; font-weight: 600"><span style="height: 1.5em; line-height: 1.5em">tiendas que recién parten</span><span style="height: 1.5em; line-height: 1.5em">marcas que están creciendo</span><span style="height: 1.5em; line-height: 1.5em">vendedores de Mercado Libre</span><span style="height: 1.5em; line-height: 1.5em">tiendas que invierten en Meta</span><span style="height: 1.5em; line-height: 1.5em">tiendas que recién parten</span></span></span></p>
+      <h1 style="margin: 0; font-weight: 600; font-size: clamp(44px, 6vw, 80px); line-height: 1; letter-spacing: -0.045em; text-wrap: balance">Tus números claros, cada mes.</h1>
+      <p style="margin: 0; font-size: 20px; line-height: 1.45; color: #4A5068; max-width: 34ch">Impuestos al día y un reporte que te dice cuánto ganaste y por qué.</p>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap">
+        <a href={wa} style="display: inline-flex; align-items: center; gap: 10px; min-height: 52px; padding: 0 24px; border-radius: 14px; background: #0034D3; color: #FFFFFF; text-decoration: none; font-weight: 500; font-size: 16px">
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 256 256"><g fill="currentColor"><path d="M224 128a96 96 0 0 1-144.07 83.11l-37.39 12.47a8 8 0 0 1-10.12-10.12l12.47-37.39A96 96 0 1 1 224 128" opacity=".2"/><path d="M128 24a104 104 0 0 0-91.82 152.88l-11.35 34.05a16 16 0 0 0 20.24 20.24l34.05-11.35A104 104 0 1 0 128 24m0 192a87.87 87.87 0 0 1-44.06-11.81a8 8 0 0 0-6.54-.67L40 216l12.47-37.4a8 8 0 0 0-.66-6.54A88 88 0 1 1 128 216"/></g></svg>
+          Comienza ahora
         </a>
-        <a href="/diagnostico" class="btn btn-outline">Haz el diagnóstico gratis</a>
+        <a href="/diagnostico" style="display: inline-flex; align-items: center; min-height: 52px; padding: 0 24px; border-radius: 14px; background: #F2ECE1; color: #0B1533; text-decoration: none; font-weight: 500; font-size: 16px">Diagnóstico gratis</a>
       </div>
-      <p class="small">Para tiendas en Shopify, Jumpseller, WooCommerce y Mercado Libre.</p>
+      <p style="margin: 0; font-size: 14px; color: #6B7085">Primera conversación sin costo · Sin permanencia · Respuesta por WhatsApp</p>
     </div>
 
-    <div>
-      <figure class="report" style="margin: 0" aria-label="Ejemplo de reporte de utilidad mensual">
-        <div class="report-head">
-          <p style="font-weight: 600">Reporte de utilidad · Septiembre</p>
-          <p class="tag">Datos de ejemplo</p>
-        </div>
-        <dl>
-          <div class="first"><dt>Ventas netas</dt><dd>$12.400.000</dd></div>
-          <div><dt>Costo de producto</dt><dd>−$4.960.000</dd></div>
-          <div><dt>Inversión en Meta</dt><dd>−$2.100.000</dd></div>
-          <div><dt>Comisiones de pasarelas</dt><dd>−$390.000</dd></div>
-          <div class="last"><dt>Costos fijos</dt><dd>−$2.300.000</dd></div>
-          <div class="total"><dt>Utilidad del mes</dt><dd>$2.650.000</dd></div>
-        </dl>
-        <div class="kpis">
-          <div class="kpi"><p class="kpi-label">ROAS del mes</p><p class="kpi-value">5,9</p></div>
-          <div class="kpi"><p class="kpi-label">ROAS de equilibrio</p><p class="kpi-value">1,8</p></div>
-        </div>
-        <figcaption class="small" style="margin-top: 16px; color: var(--ink-2)">Bajo un ROAS de 1,8 cada peso en Meta te hace perder plata. Este mes estás muy por encima.</figcaption>
-      </figure>
-    </div>
-  </section>
+    <!-- celular con el reporte + guiños de e-commerce -->
+    <div style="position: relative; display: flex; justify-content: center; min-width: 0; padding-block: 24px">
+      <div aria-hidden="true" style="position: absolute; inset: 6% 6% 6% 6%; border-radius: 40px; background: #EAF1FF"></div><svg class="dd draw" aria-hidden="true" viewBox="0 0 100 100" width="84" height="84" style="position: absolute; color: #0034D3; right: 2%; top: 0; transform: rotate(-6deg); z-index: 1"><path pathLength="1" d="M10 76 L32 52 L48 64 L82 28"/><path pathLength="1" d="M62 26 L84 26 L84 48"/></svg><svg class="dd draw" aria-hidden="true" viewBox="0 0 100 100" width="46" height="46" style="position: absolute; color: #99CCFF; left: 10%; bottom: 8%; z-index: 1"><path pathLength="1" d="M50 12 C 54 40, 60 46, 88 50 C 60 54, 54 60, 50 88 C 46 60, 40 54, 12 50 C 40 46, 46 40, 50 12 Z"/></svg><svg class="dd draw" aria-hidden="true" viewBox="0 0 100 100" width="62" height="62" style="position: absolute; color: #0034D3; right: 4%; bottom: 2%; z-index: 1; transform: rotate(8deg)"><path pathLength="1" d="M20 72 Q50 88 80 72"/><path pathLength="1" d="M20 56 Q50 72 80 56"/><path pathLength="1" d="M20 40 Q50 56 80 40 Q50 22 20 40"/></svg>
 
-  <section class="strip" aria-label="Plataformas con las que trabajamos">
-    <div class="container">
-      <span>Trabajamos con</span>
-      <span>Shopify</span><span>Jumpseller</span><span>WooCommerce</span><span>Mercado Libre</span><span>Mercado Pago</span><span>Flow</span><span>Webpay</span><span>Meta Ads</span><span>Google Ads</span>
-    </div>
-  </section>
-
-  <section class="container" style="padding-block: 96px 48px">
-    <div class="stack" style="gap: 40px">
-      <h2 class="h2" style="max-width: 18ch">¿Te suena alguna de estas?</h2>
-      <div class="row">
-        <blockquote class="quote">“Mi contador no sabe de Meta ni de Google.”</blockquote>
-        <blockquote class="quote">“Solo me avisa cuánto tengo que pagar.”</blockquote>
-        <blockquote class="quote">“No sé si este mes gané o perdí plata.”</blockquote>
+      <div class="float fl1" aria-hidden="true" style="position: absolute; left: 0; top: 64px; z-index: 2; display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 16px; background: #FFFFFF; box-shadow: 0 16px 32px -16px rgba(14,21,18,0.3); font-size: 13px">
+        <span style="display: grid; place-items: center; width: 30px; height: 30px; border-radius: 10px; background: #EAF1FF; color: #0034D3"><svg width="16" height="16" viewBox="0 0 256 256"><g fill="currentColor"><path d="m224 64l-12.16 66.86A16 16 0 0 1 196.1 144H70.55L56 64Z" opacity=".2"/><path d="M230.14 58.87A8 8 0 0 0 224 56H62.68L56.6 22.57A8 8 0 0 0 48.73 16H24a8 8 0 0 0 0 16h18l25.56 140.29a24 24 0 0 0 5.33 11.27a28 28 0 1 0 44.4 8.44h45.42a27.75 27.75 0 0 0-2.71 12a28 28 0 1 0 28-28H91.17a8 8 0 0 1-7.87-6.57L80.13 152h116a24 24 0 0 0 23.61-19.71l12.16-66.86a8 8 0 0 0-1.76-6.56M104 204a12 12 0 1 1-12-12a12 12 0 0 1 12 12m96 0a12 12 0 1 1-12-12a12 12 0 0 1 12 12m4-74.57a8 8 0 0 1-7.9 6.57H77.22L65.59 72h148.82Z"/></g></svg></span>
+        <span style="display: flex; flex-direction: column"><b style="font-weight: 600">Nuevo pedido #1043</b><span style="color: #6B7085; font-family: 'Geist Mono', monospace; font-size: 12px">$45.990</span></span>
       </div>
-      <p class="muted" style="margin: 0; font-size: 18px; max-width: 60ch">Es lo que más nos dicen los dueños de tienda. No es culpa tuya: la mayoría de los contadores no trabaja con tiendas online y no conoce cómo se declaran Meta, Shopify o las pasarelas de pago.</p>
-    </div>
-  </section>
-
-  <section class="container" style="padding-block: 48px 96px">
-    <div class="stack" style="gap: 40px">
-      <div class="stack" style="gap: 12px">
-        <p class="eyebrow">Lo que recibes cada mes</p>
-        <h2 class="h2" style="max-width: 22ch">Tu contabilidad al día y tus números de negocio, en un solo lugar.</h2>
+      <div class="float fl2" aria-hidden="true" style="position: absolute; right: 0; bottom: 96px; z-index: 2; display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 16px; background: #FFFFFF; box-shadow: 0 16px 32px -16px rgba(14,21,18,0.3); font-size: 13px">
+        <span style="display: grid; place-items: center; width: 30px; height: 30px; border-radius: 10px; background: #EAF1FF; color: #0034D3"><svg width="16" height="16" viewBox="0 0 256 256"><g fill="currentColor"><path d="M224 56v152l-32-16l-32 16l-32-16l-32 16l-32-16l-32 16V56a8 8 0 0 1 8-8h176a8 8 0 0 1 8 8" opacity=".2"/><path d="M72 104a8 8 0 0 1 8-8h96a8 8 0 0 1 0 16H80a8 8 0 0 1-8-8m8 40h96a8 8 0 0 0 0-16H80a8 8 0 0 0 0 16m152-88v152a8 8 0 0 1-11.58 7.15L192 200.94l-28.42 14.21a8 8 0 0 1-7.16 0L128 200.94l-28.42 14.21a8 8 0 0 1-7.16 0L64 200.94l-28.42 14.21A8 8 0 0 1 24 208V56a16 16 0 0 1 16-16h176a16 16 0 0 1 16 16m-16 0H40v139.06l20.42-10.22a8 8 0 0 1 7.16 0L96 199.06l28.42-14.22a8 8 0 0 1 7.16 0L160 199.06l28.42-14.22a8 8 0 0 1 7.16 0L216 195.06Z"/></g></svg></span>
+        <span style="display: flex; flex-direction: column"><b style="font-weight: 600">Boleta emitida</b><span style="color: #6B7085; font-size: 12px">y registrada en tu libro</span></span>
       </div>
-      <div class="row">
-        <article class="deliverable">
-          <p class="num">01</p>
-          <h3 class="h3">Impuestos al día</h3>
-          <p class="muted">F29, libros y declaraciones a tiempo. Te mostramos qué pagas y por qué antes de presentar.</p>
-        </article>
-        <article class="deliverable">
-          <p class="num">02</p>
-          <h3 class="h3">Facturas de compra de Meta, Google y Shopify</h3>
-          <p class="muted">Las emitimos todos los meses con el dólar observado de cada cargo. Es lo que más se olvida y lo que más multas trae.</p>
-        </article>
-        <article class="deliverable">
-          <p class="num">03</p>
-          <h3 class="h3">Todo cuadra</h3>
-          <p class="muted">Cruzamos lo que vendió tu tienda con tus boletas y lo que te depositaron Mercado Pago, Flow o Webpay.</p>
-        </article>
-        <article class="deliverable accent">
-          <p class="num">04</p>
-          <h3 class="h3">Tu reporte de utilidad</h3>
-          <p class="muted">Cuánto ganaste, tu ROAS de equilibrio y cuánto puedes invertir en Meta sin perder plata.</p>
-        </article>
-      </div>
-    </div>
-  </section>
 
-  <section id="aprendes" class="container" style="padding-bottom: 96px">
-    <div class="learn">
-      <div class="stack" style="gap: 12px">
-        <p class="eyebrow">Aprendes tu negocio</p>
-        <h2 class="h2" style="max-width: 24ch">No solo te llevamos los números. Te enseñamos a leerlos.</h2>
-        <p class="muted" style="margin: 0; font-size: 18px; max-width: 60ch">Lo vemos con nuestros clientes: entre 3 y 6 meses después de partir, entienden cómo funciona su negocio por dentro y solo nos escriben por dudas puntuales. Es contabilidad y es una inversión en ti.</p>
-      </div>
-      <div class="row">
-        <article class="card">
-          <h3 class="h3">Biblioteca de clases grabadas</h3>
-          <p class="muted">Cada duda frecuente tiene su clase corta: factura de compra, ROAS mínimo, costo de producto, F29 y más. Disponible cuando la necesites.</p>
-        </article>
-        <article class="card">
-          <h3 class="h3">Cambios tributarios, explicados</h3>
-          <p class="muted">Cada novedad del SII que afecta a tu tienda te llega en simple: qué cambia, desde cuándo y qué tienes que hacer.</p>
-        </article>
-        <article class="card">
-          <h3 class="h3">Tu reporte, con video</h3>
-          <p class="muted">Cada mes, un video corto con tus números: qué pasó, por qué y qué conviene mirar el mes siguiente.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section id="como-funciona" class="dark">
-    <div class="container section stack" style="gap: 48px">
-      <h2 class="h2">Cómo funciona</h2>
-      <ol class="steps">
-        <li>
-          <span class="step-num" aria-hidden="true">1</span>
-          <h3 class="h3">Conversamos por WhatsApp</h3>
-          <p>Nos cuentas dónde vendes, cuánto vendes y cómo llevas hoy tu contabilidad.</p>
-        </li>
-        <li>
-          <span class="step-num" aria-hidden="true">2</span>
-          <h3 class="h3">Te ponemos al día</h3>
-          <p>Revisamos meses atrasados y facturas de compra pendientes. Te cotizamos antes de hacer nada.</p>
-        </li>
-        <li>
-          <span class="step-num" aria-hidden="true">3</span>
-          <h3 class="h3">Cada mes, tus números</h3>
-          <p>Impuestos presentados, todo cuadrado y tu reporte de utilidad. Y si tienes una duda, te respondemos.</p>
-        </li>
-      </ol>
-    </div>
-  </section>
-
-  <section id="planes" class="container section stack" style="gap: 40px">
-    <div class="stack" style="gap: 12px">
-      <h2 class="h2">Planes</h2>
-      <p class="muted" style="margin: 0; font-size: 18px">Precios mensuales + IVA. Sin contrato de permanencia.</p>
-    </div>
-    <div class="plans">
-      {PLANS.map((p) => (
-        <article class={p.featured ? 'plan featured' : 'plan'}>
-          <div>
-            {p.featured && <p class="badge">Recomendado</p>}
-            <h3 class="h3">{p.name}</h3>
-            <p class="small" style="margin-top: 4px">{p.audience}</p>
+      <div style="position: relative; width: 300px; max-width: 100%; border-radius: 44px; background: #0B1533; padding: 10px; box-shadow: 0 40px 80px -40px rgba(14,21,18,0.45)">
+        <div style="border-radius: 36px; background: #FFFFFF; overflow: hidden; display: flex; flex-direction: column">
+          <div style="padding: 26px 20px 8px; display: flex; flex-direction: column; gap: 4px">
+            <p style="margin: 0; font-size: 11px; color: #6B7085">Tu tienda · septiembre · <span style="font-weight: 600">ejemplo</span></p>
+            <p style="margin: 0; font-size: 26px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.1">Ganaste <span style="color: #0034D3">$2.650.000</span></p>
+            <p style="margin: 0; font-size: 12px; color: #6B7085">21% de lo que vendiste, sin IVA</p>
           </div>
-          <p class="price">{p.price} <small>+ IVA</small></p>
-          <ul>{p.features.map((f) => <li>{f}</li>)}</ul>
-          {p.note && <p class="note">{p.note}</p>}
-        </article>
-      ))}
-    </div>
-    <p style="margin: 0; font-size: 15px" class="muted">¿No sabes qué plan te corresponde? <a href={wa} style="font-weight: 600">Escríbenos y te decimos.</a></p>
-  </section>
-
-  <section id="rodolfo" style="background: var(--soft); border-block: 1px solid var(--line)">
-    <div class="container section about">
-      <div class="photo"><img src="/rodolfo.jpg" alt="Rodolfo Navarro, contador de Contador Ecommerce" width="370" height="462" loading="lazy" decoding="async" /></div>
-      <div class="about-copy">
-        <p class="eyebrow">Quién está detrás</p>
-        <h2 class="h2" style="font-size: clamp(30px, 3.8vw, 40px)">Un contador que también tiene una tienda online.</h2>
-        <p>Soy Rodolfo Navarro, contador y cofundador de GALIA, marca de diseño de autor. Llevo la contabilidad de tiendas online y vivo lo mismo que tú: el Cyber, el ROAS, los meses con quiebre de stock.</p>
-        <p>Por eso sé lo que necesitas de un contador: números claros, todo en orden y respuestas cuando las pides.</p>
-        <a href={SITE.founder.url} style="font-weight: 600">Conoce más en rodolfo.cl</a>
+          <div style="padding: 12px 20px; display: flex; flex-direction: column; gap: 9px; font-size: 12px">
+            <div style="display: flex; flex-direction: column; gap: 4px"><div style="display: flex; justify-content: space-between"><span>Ventas · 186 pedidos</span><span style="font-family: 'Geist Mono', monospace">$12,4 M</span></div><div style="height: 6px; border-radius: 99px; background: #0034D3"></div></div>
+            <div style="display: flex; flex-direction: column; gap: 4px"><div style="display: flex; justify-content: space-between; color: #4A5068"><span>Productos</span><span style="font-family: 'Geist Mono', monospace">−$5,0 M</span></div><div style="height: 6px; width: 40%; border-radius: 99px; background: #D6D3CB"></div></div>
+            <div style="display: flex; flex-direction: column; gap: 4px"><div style="display: flex; justify-content: space-between; color: #4A5068"><span>Meta Ads</span><span style="font-family: 'Geist Mono', monospace">−$2,1 M</span></div><div style="height: 6px; width: 17%; border-radius: 99px; background: #D6D3CB"></div></div>
+            <div style="display: flex; flex-direction: column; gap: 4px"><div style="display: flex; justify-content: space-between; color: #4A5068"><span>Costos fijos</span><span style="font-family: 'Geist Mono', monospace">−$2,3 M</span></div><div style="height: 6px; width: 19%; border-radius: 99px; background: #D6D3CB"></div></div>
+          </div>
+          <div style="margin: 8px 12px 12px; padding: 14px; border-radius: 20px; background: #F2ECE1; display: flex; flex-direction: column; gap: 10px">
+            <div style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 12px; font-weight: 500">ROAS de Meta</span><span style="font-size: 11px; font-weight: 500; padding: 3px 8px; border-radius: 99px; background: #D6E4FF; color: #0034D3">Sobre el mínimo</span></div>
+            <div style="position: relative; height: 8px; border-radius: 99px; background: linear-gradient(90deg, #F6DDDA 0 30%, #D6E4FF 30% 100%)">
+              <span style="position: absolute; left: 30%; top: -4px; width: 2px; height: 16px; background: #0B1533"></span>
+              <span style="position: absolute; left: 88%; top: -4px; width: 16px; height: 16px; border-radius: 50%; background: #0034D3; border: 3px solid #FFFFFF; transform: translateX(-50%)"></span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 11px; color: #6B7085; font-family: 'Geist Mono', monospace"><span>mínimo 1,8</span><span>tuyo 5,9</span></div>
+          </div>
+          <div style="margin: 0 12px 16px; padding: 12px 14px; border-radius: 16px; border: 1px solid #E3E1DA; display: flex; gap: 10px; align-items: center">
+            <span aria-hidden="true" style="width: 30px; height: 30px; border-radius: 50%; background: #0034D3; display: grid; place-items: center; color: #FFFFFF"><svg width="12" height="12" viewBox="0 0 256 256"><path fill="currentColor" d="M240 128a15.74 15.74 0 0 1-7.6 13.51L88.32 229.65a16 16 0 0 1-16.2.3A15.86 15.86 0 0 1 64 216.13V39.87a15.86 15.86 0 0 1 8.12-13.82a16 16 0 0 1 16.2.3l144.08 88.14A15.74 15.74 0 0 1 240 128"/></svg></span>
+            <span style="font-size: 12px">Video del mes · 3 min</span>
+          </div>
+        </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <Newsletter />
+<!-- LOGOS -->
+<section class="wrap" style="padding-block: 8px 56px; display: flex; flex-direction: column; gap: 16px">
+  <p style="margin: 0; font-size: 13px; color: #6B7085; text-align: center">Trabajamos con las plataformas de tu tienda</p>
+  <div style="overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent)"><div class="marquee" style="display: flex; gap: 12px; width: max-content"><div style="flex: none; width: 160px; height: 64px; border-radius: 14px; background: #FFFFFF; border: 1px solid #E3E1DA; display: grid; place-items: center"><img src="/img/logos/shopify.png" alt="Shopify" style="height: 28px; width: auto; max-width: 120px"></div><div style="flex: none; width: 160px; height: 64px; border-radius: 14px; border: 1px dashed #D2CFC6; display: grid; place-items: center; font-weight: 600; font-size: 15px; color: #8E91A3">Jumpseller</div><div style="flex: none; width: 160px; height: 64px; border-radius: 14px; background: #FFFFFF; border: 1px solid #E3E1DA; display: grid; place-items: center"><img src="/img/logos/woocommerce.png" alt="WooCommerce" style="height: 22px; width: auto; max-width: 110px"></div><div style="flex: none; width: 160px; height: 64px; border-radius: 14px; border: 1px dashed #D2CFC6; display: grid; place-items: center; font-weight: 600; font-size: 15px; color: #8E91A3">Mercado Libre</div><div style="flex: none; width: 160px; height: 64px; border-radius: 14px; background: #FFFFFF; border: 1px solid #E3E1DA; display: grid; place-items: center"><img src="/img/logos/mercadopago.png" alt="Mercado Pago" style="height: 32px; width: auto; max-width: 124px"></div><div style="flex: none; width: 160px; height: 64px; border-radius: 14px; border: 1px dashed #D2CFC6; display: grid; place-items: center; font-weight: 600; font-size: 15px; color: #8E91A3">Webpay</div><div style="flex: none; width: 160px; height: 64px; border-radius: 14px; border: 1px dashed #D2CFC6; display: grid; place-items: center; font-weight: 600; font-size: 15px; color: #8E91A3">Flow</div><div style="flex: none; width: 160px; height: 64px; border-radius: 14px; border: 1px dashed #D2CFC6; display: grid; place-items: center; font-weight: 600; font-size: 15px; color: #8E91A3">Fintoc</div><div style="flex: none; width: 160px; height: 64px; border-radius: 14px; background: #FFFFFF; border: 1px solid #E3E1DA; display: grid; place-items: center"><img src="/img/logos/meta.png" alt="Meta" style="height: 24px; width: auto; max-width: 120px"></div><div style="flex: none; width: 160px; height: 64px; border-radius: 14px; border: 1px dashed #D2CFC6; display: grid; place-items: center; font-weight: 600; font-size: 15px; color: #8E91A3">Google Ads</div><div style="flex: none; width: 160px; height: 64px; border-radius: 14px; background: #FFFFFF; border: 1px solid #E3E1DA; display: grid; place-items: center"><img src="/img/logos/shopify.png" alt="Shopify" style="height: 28px; width: auto; max-width: 120px"></div><div style="flex: none; width: 160px; height: 64px; border-radius: 14px; border: 1px dashed #D2CFC6; display: grid; place-items: center; font-weight: 600; font-size: 15px; color: #8E91A3">Jumpseller</div><div style="flex: none; width: 160px; height: 64px; border-radius: 14px; background: #FFFFFF; border: 1px solid #E3E1DA; display: grid; place-items: center"><img src="/img/logos/woocommerce.png" alt="WooCommerce" style="height: 22px; width: auto; max-width: 110px"></div><div style="flex: none; width: 160px; height: 64px; border-radius: 14px; border: 1px dashed #D2CFC6; display: grid; place-items: center; font-weight: 600; font-size: 15px; color: #8E91A3">Mercado Libre</div><div style="flex: none; width: 160px; height: 64px; border-radius: 14px; background: #FFFFFF; border: 1px solid #E3E1DA; display: grid; place-items: center"><img src="/img/logos/mercadopago.png" alt="Mercado Pago" style="height: 32px; width: auto; max-width: 124px"></div><div style="flex: none; width: 160px; height: 64px; border-radius: 14px; border: 1px dashed #D2CFC6; display: grid; place-items: center; font-weight: 600; font-size: 15px; color: #8E91A3">Webpay</div><div style="flex: none; width: 160px; height: 64px; border-radius: 14px; border: 1px dashed #D2CFC6; display: grid; place-items: center; font-weight: 600; font-size: 15px; color: #8E91A3">Flow</div><div style="flex: none; width: 160px; height: 64px; border-radius: 14px; border: 1px dashed #D2CFC6; display: grid; place-items: center; font-weight: 600; font-size: 15px; color: #8E91A3">Fintoc</div><div style="flex: none; width: 160px; height: 64px; border-radius: 14px; background: #FFFFFF; border: 1px solid #E3E1DA; display: grid; place-items: center"><img src="/img/logos/meta.png" alt="Meta" style="height: 24px; width: auto; max-width: 120px"></div><div style="flex: none; width: 160px; height: 64px; border-radius: 14px; border: 1px dashed #D2CFC6; display: grid; place-items: center; font-weight: 600; font-size: 15px; color: #8E91A3">Google Ads</div></div></div>
+</section>
 
-  <section id="preguntas" class="narrow section stack" style="gap: 32px">
-    <h2 class="h2">Preguntas frecuentes</h2>
-    <div class="faq">
-      {FAQS.map((f) => (
-        <details>
-          <summary>{f.q}</summary>
-          <p>{f.a}</p>
-        </details>
-      ))}
+<!-- LO QUE RECIBES: bento interactivo -->
+<section id="recibes" class="wrap" style="padding-block: 56px 72px; display: flex; flex-direction: column; gap: 32px">
+  <div style="display: flex; justify-content: space-between; align-items: end; gap: 16px; flex-wrap: wrap"><h2 style="margin: 0; font-weight: 600; font-size: clamp(32px, 4vw, 48px); line-height: 1.05; letter-spacing: -0.035em; max-width: 18ch">Todo lo que tu tienda necesita, cada mes.</h2><span style="font-size: 13px; color: #6B7085">Cifras de ejemplo</span></div>
+  <div class="bento">
+    <article class="span4" style="border-radius: 24px; background: #0034D3; color: #FFFFFF; padding: 32px; display: flex; flex-direction: column; gap: 24px; min-width: 0">
+      <div style="display: flex; flex-direction: column; gap: 8px">
+        <h3 style="margin: 0; font-size: 24px; font-weight: 600; letter-spacing: -0.02em">Tu reporte de utilidad</h3>
+        <p style="margin: 0; font-size: 16px; color: #C9DCFF">Cuánto ganaste y cuánto puedes invertir en Meta sin perder dinero.</p>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px">
+        <div style="padding: 16px; border-radius: 16px; background: rgba(255,255,255,0.1)"><p style="margin: 0; font-size: 12px; color: #C9DCFF">Utilidad</p><p class="kv" style="margin: 4px 0 0; font-size: 24px; font-weight: 600; letter-spacing: -0.02em; white-space: nowrap">$2,65 M</p></div>
+        <div style="padding: 16px; border-radius: 16px; background: rgba(255,255,255,0.1)"><p style="margin: 0; font-size: 12px; color: #C9DCFF">ROAS mínimo</p><p class="kv" style="margin: 4px 0 0; font-size: 24px; font-weight: 600; letter-spacing: -0.02em; white-space: nowrap">1,8</p></div>
+        <div style="padding: 16px; border-radius: 16px; background: rgba(255,255,255,0.1)"><p style="margin: 0; font-size: 12px; color: #C9DCFF">Ticket promedio</p><p class="kv" style="margin: 4px 0 0; font-size: 24px; font-weight: 600; letter-spacing: -0.02em; white-space: nowrap">$66.700</p></div>
+      </div>
+    </article>
+
+    <article class="span2" style="border-radius: 24px; background: #F2ECE1; padding: 28px; display: flex; flex-direction: column; gap: 16px; min-width: 0">
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px">
+        <h3 style="margin: 0; font-size: 20px; font-weight: 600; letter-spacing: -0.02em">Impuestos al día</h3>
+        <span style="display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 500; color: #0034D3"><span class="live ring" aria-hidden="true" style="width: 8px; height: 8px; border-radius: 50%; background: #0034D3"></span>Revisando</span>
+      </div>
+      <ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 14px">
+        <li class="r1" style="display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; border-radius: 12px; background: #FFFFFF"><span>F29 de septiembre</span><span class="t1" style="display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: #0034D3; color: #FFFFFF; font-size: 12px">✓</span></li>
+        <li class="r2" style="display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; border-radius: 12px; background: #FFFFFF"><span>Libro de ventas</span><span class="t2" style="display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: #0034D3; color: #FFFFFF; font-size: 12px">✓</span></li>
+        <li class="r3" style="display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; border-radius: 12px; background: #FFFFFF"><span>Libro de compras</span><span class="t3" style="display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: #0034D3; color: #FFFFFF; font-size: 12px">✓</span></li>
+        <li class="r4" style="display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; border-radius: 12px; background: #FFFFFF"><span>Cotizaciones</span><span class="t4" style="display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: #0034D3; color: #FFFFFF; font-size: 12px">✓</span></li>
+      </ul>
+    </article>
+
+    <article class="span3" style="border-radius: 24px; background: #F2ECE1; padding: 28px; display: flex; flex-direction: column; gap: 16px; min-width: 0">
+      <h3 style="margin: 0; font-size: 20px; font-weight: 600; letter-spacing: -0.02em">Facturas de compra de Meta, Google y Shopify</h3>
+      <div style="display: flex; flex-direction: column; gap: 8px; font-size: 14px">
+        <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 12px; align-items: center; padding: 10px 12px; border-radius: 12px; background: #FFFFFF"><span>Meta Platforms</span><span style="font-family: 'Geist Mono', monospace">US$ 2.240</span><span style="font-size: 11px; font-weight: 500; padding: 3px 8px; border-radius: 99px; background: #D6E4FF; color: #0034D3">Emitida</span></div>
+        <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 12px; align-items: center; padding: 10px 12px; border-radius: 12px; background: #FFFFFF"><span>Google Ads</span><span style="font-family: 'Geist Mono', monospace">US$ 380</span><span style="font-size: 11px; font-weight: 500; padding: 3px 8px; border-radius: 99px; background: #D6E4FF; color: #0034D3">Emitida</span></div>
+        <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 12px; align-items: center; padding: 10px 12px; border-radius: 12px; background: #FFFFFF"><span>Shopify</span><span style="font-family: 'Geist Mono', monospace">US$ 79</span><span style="font-size: 11px; font-weight: 500; padding: 3px 8px; border-radius: 99px; background: #FFF3D6; color: #8A5A00"><span class="live" style="display: inline-block">●</span> En curso</span></div>
+      </div>
+    </article>
+
+    <article class="span3" style="border-radius: 24px; background: #F2ECE1; padding: 28px; display: flex; flex-direction: column; gap: 16px; min-width: 0">
+      <h3 style="margin: 0; font-size: 20px; font-weight: 600; letter-spacing: -0.02em">Todo cuadra</h3>
+      <p style="margin: 0; font-size: 15px; color: #4A5068">Pedidos, boletas y depósitos de tus pasarelas, cruzados.</p>
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; text-align: center; font-size: 13px">
+        <div style="padding: 12px 6px; border-radius: 12px; background: #FFFFFF; display: flex; flex-direction: column; gap: 2px"><span style="color: #6B7085">Pedidos</span><b style="font-family: 'Geist Mono', monospace; font-weight: 500">$14,8 M</b></div>
+        <div style="padding: 12px 6px; border-radius: 12px; background: #FFFFFF; display: flex; flex-direction: column; gap: 2px"><span style="color: #6B7085">Boletas</span><b style="font-family: 'Geist Mono', monospace; font-weight: 500">$14,8 M</b></div>
+        <div style="padding: 12px 6px; border-radius: 12px; background: #FFFFFF; display: flex; flex-direction: column; gap: 2px"><span style="color: #6B7085">Depósitos</span><b style="font-family: 'Geist Mono', monospace; font-weight: 500">$14,3 M</b></div>
+      </div>
+      <div style="height: 8px; border-radius: 99px; background: #DCE5F5; overflow: hidden"><div class="bar" style="height: 100%; border-radius: 99px; background: #0034D3"></div></div>
+      <p style="margin: 0; font-size: 13px; color: #4A5068">Diferencia de $0,5 M = comisiones de pasarelas. <b style="color: #0034D3; font-weight: 600">Cuadrado ✓</b></p>
+    </article>
+  </div>
+</section>
+
+<!-- 3 A 6 MESES: línea de tiempo -->
+<section style="background: #EAF1FF">
+  <div class="wrap" style="padding-block: 88px; display: flex; flex-direction: column; gap: 44px">
+    <div style="display: flex; flex-direction: column; gap: 12px">
+      <p style="margin: 0; font-size: 13px; font-weight: 500; color: #0034D3">Aprendes tu negocio</p>
+      <div style="position: relative"><h2 style="margin: 0; font-weight: 600; font-size: clamp(32px, 4vw, 48px); line-height: 1.05; letter-spacing: -0.035em; max-width: 20ch">En 3 a 6 meses, entiendes tu negocio.</h2><svg class="dd draw" aria-hidden="true" viewBox="0 0 100 100" width="120" height="120" style="position: absolute; color: #0034D3; right: 0; top: -30px"><path pathLength="1" d="M12 82 C 28 82, 34 52, 50 54 C 66 56, 60 78, 46 72 C 32 66, 52 30, 84 22"/><path pathLength="1" d="M68 16 L86 20 L82 38"/></svg></div>
     </div>
-  </section>
-
-  <section id="contacto" class="container" style="padding-bottom: 96px">
-    <div class="cta">
-      <h2 class="h2" style="max-width: 20ch">¿Quieres saber si tu tienda está ganando plata?</h2>
-      <p>Escríbenos, cuéntanos dónde vendes y te decimos cómo te podemos ayudar.</p>
-      <a href={wa} class="btn btn-white">
-        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.4A8.4 8.4 0 1 1 21 11.5z"></path></svg>
-        Hablemos por WhatsApp
-      </a>
+    <div style="position: relative; height: 10px; border-radius: 99px; background: #C9DCFF">
+      <div class="bar" style="height: 100%; border-radius: 99px; background: #0034D3"></div>
+      <span style="position: absolute; left: 0; top: -5px; width: 20px; height: 20px; border-radius: 50%; background: #0034D3; border: 4px solid #EAF1FF"></span>
+      <span style="position: absolute; left: calc(50% - 10px); top: -5px; width: 20px; height: 20px; border-radius: 50%; background: #0034D3; border: 4px solid #EAF1FF"></span>
+      <span style="position: absolute; right: 0; top: -5px; width: 20px; height: 20px; border-radius: 50%; background: #0034D3; border: 4px solid #EAF1FF"></span>
     </div>
-  </section>
-</Base>
+    <ol class="three" style="list-style: none; margin: 0; padding: 0">
+      <li style="padding: 24px; border-radius: 22px; background: #FFFFFF; display: flex; flex-direction: column; gap: 14px">
+        <span style="align-self: flex-start; font-family: 'Geist Mono', monospace; font-size: 12px; padding: 4px 10px; border-radius: 99px; background: #EAF1FF; color: #0034D3">Mes 1</span>
+        <p style="margin: 0; font-size: 20px; font-weight: 600; letter-spacing: -0.02em">Entiendes qué pagas</p>
+        <div style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 12px; background: #F2ECE1; font-size: 13px">
+          <span aria-hidden="true" style="color: #0034D3"><svg width="18" height="18" viewBox="0 0 256 256"><g fill="currentColor"><path d="M232 56v144h-72a32 32 0 0 0-32 32a32 32 0 0 0-32-32H24V56h72a32 32 0 0 1 32 32a32 32 0 0 1 32-32Z" opacity=".2"/><path d="M232 48h-72a40 40 0 0 0-32 16a40 40 0 0 0-32-16H24a8 8 0 0 0-8 8v144a8 8 0 0 0 8 8h72a24 24 0 0 1 24 24a8 8 0 0 0 16 0a24 24 0 0 1 24-24h72a8 8 0 0 0 8-8V56a8 8 0 0 0-8-8M96 192H32V64h64a24 24 0 0 1 24 24v112a39.8 39.8 0 0 0-24-8m128 0h-64a39.8 39.8 0 0 0-24 8V88a24 24 0 0 1 24-24h64Z"/></g></svg></span>
+          Clase corta: tu F29 en 5 minutos
+        </div>
+      </li>
+      <li style="padding: 24px; border-radius: 22px; background: #FFFFFF; display: flex; flex-direction: column; gap: 14px">
+        <span style="align-self: flex-start; font-family: 'Geist Mono', monospace; font-size: 12px; padding: 4px 10px; border-radius: 99px; background: #EAF1FF; color: #0034D3">Mes 3</span>
+        <p style="margin: 0; font-size: 20px; font-weight: 600; letter-spacing: -0.02em">Lees tu reporte solo</p>
+        <div style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 12px; background: #F2ECE1; font-size: 13px">
+          <span aria-hidden="true" style="color: #0034D3"><svg width="18" height="18" viewBox="0 0 256 256"><g fill="currentColor"><path d="M228.23 134.69L84.15 222.81A8 8 0 0 1 72 216.12V39.88a8 8 0 0 1 12.15-6.69l144.08 88.12a7.82 7.82 0 0 1 0 13.38" opacity=".2"/><path d="M232.4 114.49L88.32 26.35a16 16 0 0 0-16.2-.3A15.86 15.86 0 0 0 64 39.87v176.26A15.94 15.94 0 0 0 80 232a16.07 16.07 0 0 0 8.36-2.35l144.04-88.14a15.81 15.81 0 0 0 0-27ZM80 215.94V40l143.83 88Z"/></g></svg></span>
+          Video mensual con tus números
+        </div>
+      </li>
+      <li style="padding: 24px; border-radius: 22px; background: #0034D3; color: #FFFFFF; display: flex; flex-direction: column; gap: 14px">
+        <span style="align-self: flex-start; font-family: 'Geist Mono', monospace; font-size: 12px; padding: 4px 10px; border-radius: 99px; background: rgba(255,255,255,0.16)">Mes 6</span>
+        <p style="margin: 0; font-size: 20px; font-weight: 600; letter-spacing: -0.02em">Decides cuánto invertir</p>
+        <div style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 12px; background: rgba(255,255,255,0.12); font-size: 13px">
+          <span aria-hidden="true"><svg width="18" height="18" viewBox="0 0 256 256"><g fill="currentColor"><path d="M232 56v64l-64-64Z" opacity=".2"/><path d="M232 48h-64a8 8 0 0 0-5.66 13.66L188.69 88L136 140.69l-34.34-34.35a8 8 0 0 0-11.32 0l-72 72a8 8 0 0 0 11.32 11.32L96 123.31l34.34 34.35a8 8 0 0 0 11.32 0L200 99.31l26.34 26.35A8 8 0 0 0 240 120V56a8 8 0 0 0-8-8m-8 52.69L187.31 64H224Z"/></g></svg></span>
+          Y te avisamos cada cambio del SII
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- PARTIR ES SIMPLE -->
+<section class="wrap" style="padding-block: 88px">
+  <div style="display: flex; flex-direction: column; gap: 40px">
+    <div style="display: flex; justify-content: space-between; align-items: end; gap: 20px; flex-wrap: wrap">
+      <div style="display: flex; flex-direction: column; gap: 10px">
+        <p style="margin: 0; font-size: 13px; font-weight: 500; color: #0034D3">Cómo partir</p>
+        <h2 style="margin: 0; font-weight: 600; font-size: clamp(32px, 4vw, 48px); line-height: 1.05; letter-spacing: -0.035em">3 pasos y te olvidas del papeleo</h2>
+      </div>
+      <a href={wa} style="display: inline-flex; align-items: center; min-height: 52px; padding: 0 24px; border-radius: 14px; background: #0034D3; color: #FFFFFF; text-decoration: none; font-weight: 500; font-size: 16px">Comienza ahora →</a>
+    </div>
+
+    <ol class="steps3" style="list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr) 48px minmax(0, 1fr) 48px minmax(0, 1fr); align-items: stretch; gap: 0">
+      <li style="border-radius: 24px; background: #F2ECE1; padding: 28px; display: flex; flex-direction: column; gap: 14px; min-width: 0">
+        <div style="display: flex; align-items: center; gap: 12px">
+          <span style="flex: none; width: 48px; height: 48px; border-radius: 50%; background: #0034D3; color: #FFFFFF; display: grid; place-items: center; font-size: 22px; font-weight: 600">1</span>
+          <span style="font-size: 12px; font-weight: 500; padding: 4px 10px; border-radius: 99px; background: #FFFFFF; color: #0034D3">Hoy</span>
+        </div>
+        <h3 style="margin: 0; font-size: 24px; font-weight: 600; letter-spacing: -0.025em; line-height: 1.15">Nos escribes por WhatsApp</h3>
+        <p style="margin: 0; font-size: 16px; color: #4A5068">Nos cuentas dónde vendes y cuánto vendes. Sin costo.</p>
+        <div style="margin-top: auto; padding: 14px; border-radius: 16px; background: #FFFFFF; display: flex; flex-direction: column; gap: 8px; font-size: 13px">
+          <span style="align-self: flex-start; padding: 8px 12px; border-radius: 14px 14px 14px 4px; background: #F2ECE1">Vendo en Shopify y Mercado Libre</span>
+          <span style="align-self: flex-end; padding: 8px 12px; border-radius: 14px 14px 4px 14px; background: #0034D3; color: #FFFFFF">¡Perfecto! Te ayudamos</span>
+        </div>
+      </li>
+      <li aria-hidden="true" class="arrow" style="display: grid; place-items: center; color: #0034D3"><svg class="dd" viewBox="0 0 100 100" width="44" height="44"><path d="M12 50 L84 50"/><path d="M62 28 L86 50 L62 72"/></svg></li>
+      <li style="border-radius: 24px; background: #F2ECE1; padding: 28px; display: flex; flex-direction: column; gap: 14px; min-width: 0">
+        <div style="display: flex; align-items: center; gap: 12px">
+          <span style="flex: none; width: 48px; height: 48px; border-radius: 50%; background: #0034D3; color: #FFFFFF; display: grid; place-items: center; font-size: 22px; font-weight: 600">2</span>
+          <span style="font-size: 12px; font-weight: 500; padding: 4px 10px; border-radius: 99px; background: #FFFFFF; color: #0034D3">Primeras semanas</span>
+        </div>
+        <h3 style="margin: 0; font-size: 24px; font-weight: 600; letter-spacing: -0.025em; line-height: 1.15">Te ponemos al día</h3>
+        <p style="margin: 0; font-size: 16px; color: #4A5068">Revisamos atrasos y facturas pendientes. Te cotizamos antes de partir.</p>
+        <div style="margin-top: auto; padding: 14px; border-radius: 16px; background: #FFFFFF; display: flex; flex-direction: column; gap: 8px; font-size: 13px">
+          <span style="display: flex; justify-content: space-between">Meses atrasados <b style="color: #0034D3; font-weight: 600">0 ✓</b></span>
+          <span style="display: flex; justify-content: space-between">Facturas de compra <b style="color: #0034D3; font-weight: 600">Al día ✓</b></span>
+        </div>
+      </li>
+      <li aria-hidden="true" class="arrow" style="display: grid; place-items: center; color: #0034D3"><svg class="dd" viewBox="0 0 100 100" width="44" height="44"><path d="M12 50 L84 50"/><path d="M62 28 L86 50 L62 72"/></svg></li>
+      <li style="border-radius: 24px; background: #0034D3; color: #FFFFFF; padding: 28px; display: flex; flex-direction: column; gap: 14px; min-width: 0">
+        <div style="display: flex; align-items: center; gap: 12px">
+          <span style="flex: none; width: 48px; height: 48px; border-radius: 50%; background: #FFFFFF; color: #0034D3; display: grid; place-items: center; font-size: 22px; font-weight: 600">3</span>
+          <span style="font-size: 12px; font-weight: 500; padding: 4px 10px; border-radius: 99px; background: rgba(255,255,255,0.16)">Cada mes</span>
+        </div>
+        <h3 style="margin: 0; font-size: 24px; font-weight: 600; letter-spacing: -0.025em; line-height: 1.15">Recibes tus números</h3>
+        <p style="margin: 0; font-size: 16px; color: #C9DCFF">Impuestos presentados y tu reporte de utilidad en el celular.</p>
+        <div style="margin-top: auto; padding: 14px; border-radius: 16px; background: rgba(255,255,255,0.12); display: flex; flex-direction: column; gap: 4px">
+          <span style="font-size: 12px; color: #C9DCFF">Ganaste en octubre</span>
+          <span style="font-size: 26px; font-weight: 600; letter-spacing: -0.03em">$2.980.000</span>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- PLANES -->
+<section id="planes" class="wrap" style="padding-block: 56px 40px; display: flex; flex-direction: column; gap: 28px">
+  <div style="display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center">
+    <div style="position: relative; padding-inline: 70px"><h2 style="margin: 0; font-weight: 600; font-size: clamp(32px, 4.4vw, 56px); letter-spacing: -0.04em; line-height: 1.02">Elige tu plan y comienza este mes</h2><svg class="dd draw" aria-hidden="true" viewBox="0 0 100 100" width="54" height="54" style="position: absolute; color: #0034D3; left: 0; top: -10px"><path pathLength="1" d="M50 12 C 54 40, 60 46, 88 50 C 60 54, 54 60, 50 88 C 46 60, 40 54, 12 50 C 40 46, 46 40, 50 12 Z"/></svg><svg class="dd draw" aria-hidden="true" viewBox="0 0 100 100" width="54" height="54" style="position: absolute; color: #99CCFF; right: 0; bottom: -6px; transform: rotate(10deg)"><path pathLength="1" d="M76 18 L26 84"/><circle pathLength="1" cx="30" cy="30" r="10"/><circle pathLength="1" cx="72" cy="72" r="10"/></svg></div>
+    <p style="margin: 0; font-size: 17px; color: #4A5068">Precios mensuales + IVA. Sin permanencia: te vas cuando quieras, avisando con 30 días.</p>
+  </div>
+  <div class="four" style="align-items: stretch">
+    <article style="padding: 26px; border-radius: 24px; border: 1px solid #E3E1DA; display: flex; flex-direction: column; gap: 18px">
+      <div aria-hidden="true" style="height: 72px; border-radius: 16px; background: #F2ECE1; display: flex; align-items: end; gap: 6px; padding: 14px"><span style="flex: 1; height: 30%; border-radius: 4px; background: #C9DCFF"></span><span style="flex: 1; height: 45%; border-radius: 4px; background: #C9DCFF"></span><span style="flex: 1; height: 38%; border-radius: 4px; background: #C9DCFF"></span><span style="flex: 1; height: 55%; border-radius: 4px; background: #0034D3"></span></div>
+      <div><h3 style="margin: 0; font-size: 20px; font-weight: 600">Arranque</h3><p style="margin: 4px 0 0; font-size: 14px; color: #6B7085">Para tiendas que recién parten, hasta $5 M al mes</p></div>
+      <p style="margin: 0; font-size: 40px; font-weight: 600; letter-spacing: -0.035em; line-height: 1">$80.000<span style="font-size: 14px; font-weight: 400; color: #6B7085; letter-spacing: 0"> /mes + IVA</span></p>
+      <a href={wa} style="display: grid; place-items: center; min-height: 48px; border-radius: 12px; background: #0B1533; color: #FFFFFF; text-decoration: none; font-weight: 500">Comienza ahora</a>
+      <ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 14px; color: #33384D"><li>✓ F29 y contabilidad al día</li><li>✓ Facturas de compra digitales</li><li>✓ Reporte mensual de utilidad</li><li>✓ Respuesta en 48 h hábiles</li></ul>
+      <p style="margin: auto 0 0; font-size: 13px; color: #8A5A00">Cupos limitados</p>
+    </article>
+    <article style="padding: 26px; border-radius: 24px; border: 1px solid #E3E1DA; display: flex; flex-direction: column; gap: 18px">
+      <div aria-hidden="true" style="height: 72px; border-radius: 16px; background: #F2ECE1; display: flex; align-items: end; gap: 6px; padding: 14px"><span style="flex: 1; height: 35%; border-radius: 4px; background: #C9DCFF"></span><span style="flex: 1; height: 50%; border-radius: 4px; background: #C9DCFF"></span><span style="flex: 1; height: 62%; border-radius: 4px; background: #C9DCFF"></span><span style="flex: 1; height: 72%; border-radius: 4px; background: #0034D3"></span></div>
+      <div><h3 style="margin: 0; font-size: 20px; font-weight: 600">Básico</h3><p style="margin: 4px 0 0; font-size: 14px; color: #6B7085">Para tiendas que venden hasta $10 M al mes</p></div>
+      <p style="margin: 0; font-size: 40px; font-weight: 600; letter-spacing: -0.035em; line-height: 1">3 UF<span style="font-size: 14px; font-weight: 400; color: #6B7085; letter-spacing: 0"> /mes + IVA</span></p>
+      <a href={wa} style="display: grid; place-items: center; min-height: 48px; border-radius: 12px; background: #0B1533; color: #FFFFFF; text-decoration: none; font-weight: 500">Comienza ahora</a>
+      <ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 14px; color: #33384D"><li>✓ Todo lo de Arranque</li><li>✓ 1 trabajador incluido</li><li>✓ Cuadre de ventas vs boletas</li><li>✓ Operación Renta con 50% dcto.</li></ul>
+    </article>
+    <article style="padding: 26px; border-radius: 24px; border: 2px solid #0034D3; display: flex; flex-direction: column; gap: 18px; position: relative">
+      <p style="margin: 0; position: absolute; top: -14px; left: 50%; transform: translateX(-50%); padding: 5px 12px; border-radius: 999px; background: #0034D3; color: #FFFFFF; font-size: 12px; font-weight: 600; white-space: nowrap">Comienza acá</p>
+      <div aria-hidden="true" style="height: 72px; border-radius: 16px; background: #EAF1FF; display: flex; align-items: end; gap: 6px; padding: 14px"><span style="flex: 1; height: 45%; border-radius: 4px; background: #99CCFF"></span><span style="flex: 1; height: 62%; border-radius: 4px; background: #99CCFF"></span><span style="flex: 1; height: 78%; border-radius: 4px; background: #99CCFF"></span><span style="flex: 1; height: 95%; border-radius: 4px; background: #0034D3"></span></div>
+      <div><h3 style="margin: 0; font-size: 20px; font-weight: 600">Medio</h3><p style="margin: 4px 0 0; font-size: 14px; color: #6B7085">De $10 a $25 M al mes, invirtiendo en Meta</p></div>
+      <p style="margin: 0; font-size: 40px; font-weight: 600; letter-spacing: -0.035em; line-height: 1">4,5 UF<span style="font-size: 14px; font-weight: 400; color: #6B7085; letter-spacing: 0"> /mes + IVA</span></p>
+      <a href={wa} style="display: grid; place-items: center; min-height: 48px; border-radius: 12px; background: #0034D3; color: #FFFFFF; text-decoration: none; font-weight: 500">Comienza ahora</a>
+      <ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 14px; color: #33384D"><li>✓ Reporte semanal de utilidad</li><li>✓ Conciliación de pasarelas y banco</li><li>✓ Metas de inversión en Meta</li><li>✓ Operación Renta incluida</li><li>✓ Respuesta en 24 h hábiles</li></ul>
+    </article>
+    <article style="padding: 26px; border-radius: 24px; border: 1px solid #E3E1DA; display: flex; flex-direction: column; gap: 18px">
+      <div aria-hidden="true" style="height: 72px; border-radius: 16px; background: #F2ECE1; display: flex; align-items: end; gap: 6px; padding: 14px"><span style="flex: 1; height: 60%; border-radius: 4px; background: #C9DCFF"></span><span style="flex: 1; height: 72%; border-radius: 4px; background: #C9DCFF"></span><span style="flex: 1; height: 85%; border-radius: 4px; background: #C9DCFF"></span><span style="flex: 1; height: 100%; border-radius: 4px; background: #0034D3"></span></div>
+      <div><h3 style="margin: 0; font-size: 20px; font-weight: 600">Experto</h3><p style="margin: 4px 0 0; font-size: 14px; color: #6B7085">De $25 a $60 M al mes, varios canales</p></div>
+      <p style="margin: 0; font-size: 40px; font-weight: 600; letter-spacing: -0.035em; line-height: 1">7 UF<span style="font-size: 14px; font-weight: 400; color: #6B7085; letter-spacing: 0"> /mes + IVA</span></p>
+      <a href={wa} style="display: grid; place-items: center; min-height: 48px; border-radius: 12px; background: #0B1533; color: #FFFFFF; text-decoration: none; font-weight: 500">Comienza ahora</a>
+      <ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 14px; color: #33384D"><li>✓ Margen por canal y producto</li><li>✓ Planificación tributaria semestral</li><li>✓ Reunión mensual</li><li>✓ Respuesta el mismo día hábil</li></ul>
+    </article>
+  </div>
+</section>
+
+<!-- SE INCLUYE SIEMPRE -->
+<section class="wrap" style="padding-block: 72px; display: flex; flex-direction: column; gap: 24px">
+  <h2 style="margin: 0 0 16px; font-weight: 600; font-size: clamp(32px, 4vw, 48px); letter-spacing: -0.035em; text-align: center">Se incluye siempre, en todos los planes</h2>
+
+  <div class="split" style="border-radius: 28px; background: #F2ECE1; padding: clamp(24px, 4vw, 48px)">
+    <div style="border-radius: 20px; background: #FFFFFF; padding: 20px; display: flex; flex-direction: column; gap: 10px; font-size: 14px; min-width: 0">
+      <div style="display: flex; align-items: center; gap: 10px; padding-bottom: 10px; border-bottom: 1px solid #ECE7DD"><span aria-hidden="true" style="width: 34px; height: 34px; border-radius: 50%; background: #0034D3; color: #FFFFFF; display: grid; place-items: center; font-weight: 600; font-size: 13px">CE</span><span style="display: flex; flex-direction: column"><b style="font-weight: 600">contador.ecommerce</b><span style="font-size: 12px; color: #0034D3">en línea</span></span></div>
+      <span style="align-self: flex-end; max-width: 80%; padding: 9px 13px; border-radius: 14px 14px 4px 14px; background: #D6E4FF">¿Puedo descontar el IVA de la factura de Meta?</span>
+      <span style="align-self: flex-start; max-width: 80%; padding: 9px 13px; border-radius: 14px 14px 14px 4px; background: #F2ECE1">Sí, con la factura de compra que emitimos cada mes. Te mando la clase de 4 min 👇</span>
+      <span aria-label="escribiendo" style="align-self: flex-start; display: inline-flex; gap: 4px; padding: 12px 14px; border-radius: 14px; background: #F2ECE1"><span class="live" style="width: 6px; height: 6px; border-radius: 50%; background: #8E91A3"></span><span class="live" style="width: 6px; height: 6px; border-radius: 50%; background: #8E91A3; animation-delay: .2s"></span><span class="live" style="width: 6px; height: 6px; border-radius: 50%; background: #8E91A3; animation-delay: .4s"></span></span>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 12px; min-width: 0">
+      <h3 style="margin: 0; font-size: clamp(26px, 3vw, 36px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1">Respuestas por WhatsApp, de un contador que sabe de e-commerce</h3>
+      <p style="margin: 0; font-size: 17px; color: #4A5068">Preguntas lo que necesites y te respondemos en simple, con un video corto si hace falta.</p>
+    </div>
+  </div>
+
+  <div class="split" style="border-radius: 28px; background: #F2ECE1; padding: clamp(24px, 4vw, 48px)">
+    <div style="display: flex; flex-direction: column; gap: 12px; min-width: 0">
+      <h3 style="margin: 0; font-size: clamp(26px, 3vw, 36px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1">Biblioteca de clases cortas</h3>
+      <p style="margin: 0; font-size: 17px; color: #4A5068">Factura de compra, ROAS mínimo, costo de producto, F29. Cada duda frecuente, en 5 minutos.</p>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; min-width: 0">
+      <div style="border-radius: 16px; background: #FFFFFF; overflow: hidden"><div style="height: 84px; background: #0034D3; display: grid; place-items: center; color: #FFFFFF"><svg aria-hidden="true" width="26" height="26" viewBox="0 0 256 256"><path fill="currentColor" d="M240 128a15.74 15.74 0 0 1-7.6 13.51L88.32 229.65a16 16 0 0 1-16.2.3A15.86 15.86 0 0 1 64 216.13V39.87a15.86 15.86 0 0 1 8.12-13.82a16 16 0 0 1 16.2.3l144.08 88.14A15.74 15.74 0 0 1 240 128"/></svg></div><p style="margin: 0; padding: 10px 12px; font-size: 13px; font-weight: 500">Tu F29 en 5 minutos</p></div>
+      <div style="border-radius: 16px; background: #FFFFFF; overflow: hidden"><div style="height: 84px; background: #2D5BE3; display: grid; place-items: center; color: #FFFFFF"><svg aria-hidden="true" width="26" height="26" viewBox="0 0 256 256"><path fill="currentColor" d="M240 128a15.74 15.74 0 0 1-7.6 13.51L88.32 229.65a16 16 0 0 1-16.2.3A15.86 15.86 0 0 1 64 216.13V39.87a15.86 15.86 0 0 1 8.12-13.82a16 16 0 0 1 16.2.3l144.08 88.14A15.74 15.74 0 0 1 240 128"/></svg></div><p style="margin: 0; padding: 10px 12px; font-size: 13px; font-weight: 500">Qué es el ROAS mínimo</p></div>
+      <div style="border-radius: 16px; background: #FFFFFF; overflow: hidden"><div style="height: 84px; background: #6F9BFF; display: grid; place-items: center; color: #FFFFFF"><svg aria-hidden="true" width="26" height="26" viewBox="0 0 256 256"><path fill="currentColor" d="M240 128a15.74 15.74 0 0 1-7.6 13.51L88.32 229.65a16 16 0 0 1-16.2.3A15.86 15.86 0 0 1 64 216.13V39.87a15.86 15.86 0 0 1 8.12-13.82a16 16 0 0 1 16.2.3l144.08 88.14A15.74 15.74 0 0 1 240 128"/></svg></div><p style="margin: 0; padding: 10px 12px; font-size: 13px; font-weight: 500">Factura de compra de Meta</p></div>
+      <div style="border-radius: 16px; background: #FFFFFF; overflow: hidden"><div style="height: 84px; background: #003087; display: grid; place-items: center; color: #FFFFFF"><svg aria-hidden="true" width="26" height="26" viewBox="0 0 256 256"><path fill="currentColor" d="M240 128a15.74 15.74 0 0 1-7.6 13.51L88.32 229.65a16 16 0 0 1-16.2.3A15.86 15.86 0 0 1 64 216.13V39.87a15.86 15.86 0 0 1 8.12-13.82a16 16 0 0 1 16.2.3l144.08 88.14A15.74 15.74 0 0 1 240 128"/></svg></div><p style="margin: 0; padding: 10px 12px; font-size: 13px; font-weight: 500">Calcula tu costo de producto</p></div>
+    </div>
+  </div>
+
+  <div class="split" style="border-radius: 28px; background: #F2ECE1; padding: clamp(24px, 4vw, 48px)">
+    <div style="display: flex; flex-direction: column; gap: 10px; min-width: 0">
+      <div style="display: flex; gap: 12px; align-items: flex-start; padding: 16px; border-radius: 16px; background: #FFFFFF; box-shadow: 0 12px 28px -18px rgba(14,21,18,0.35)">
+        <span aria-hidden="true" class="ring" style="flex: none; width: 36px; height: 36px; border-radius: 12px; background: #0034D3; color: #FFFFFF; display: grid; place-items: center"><svg width="18" height="18" viewBox="0 0 256 256"><g fill="currentColor"><path d="M208 192H48a8 8 0 0 1-6.88-12C47.71 168.6 56 147.81 56 112a72 72 0 0 1 144 0c0 35.82 8.3 56.6 14.9 68a8 8 0 0 1-6.9 12" opacity=".2"/><path d="M224 71.1a8 8 0 0 1-10.78-3.42a94.13 94.13 0 0 0-33.46-36.91a8 8 0 1 1 8.54-13.54a111.46 111.46 0 0 1 39.12 43.09A8 8 0 0 1 224 71.1M35.71 72a8 8 0 0 0 7.1-4.32a94.13 94.13 0 0 1 33.46-36.91a8 8 0 1 0-8.54-13.54a111.46 111.46 0 0 0-39.12 43.09A8 8 0 0 0 35.71 72m186.1 103.94A16 16 0 0 1 208 200h-40.8a40 40 0 0 1-78.4 0H48a16 16 0 0 1-13.79-24.06C43.22 160.39 48 138.28 48 112a80 80 0 0 1 160 0c0 26.27 4.78 48.38 13.81 63.94M150.62 200h-45.24a24 24 0 0 0 45.24 0M208 184c-10.64-18.27-16-42.49-16-72a64 64 0 0 0-128 0c0 29.52-5.38 53.74-16 72Z"/></g></svg></span>
+        <span style="display: flex; flex-direction: column; gap: 2px; font-size: 14px"><b style="font-weight: 600">Cambio del SII que te afecta</b><span style="color: #4A5068">Qué cambia, desde cuándo y qué tienes que hacer.</span></span>
+      </div>
+      <div style="display: flex; gap: 12px; align-items: flex-start; padding: 16px; border-radius: 16px; background: #FFFFFF; opacity: .7">
+        <span aria-hidden="true" style="flex: none; width: 36px; height: 36px; border-radius: 12px; background: #D6E4FF; color: #0034D3; display: grid; place-items: center"><svg width="18" height="18" viewBox="0 0 256 256"><g fill="currentColor"><path d="M224 128a96 96 0 1 1-96-96a96 96 0 0 1 96 96" opacity=".2"/><path d="M173.66 98.34a8 8 0 0 1 0 11.32l-56 56a8 8 0 0 1-11.32 0l-24-24a8 8 0 0 1 11.32-11.32L112 148.69l50.34-50.35a8 8 0 0 1 11.32 0M232 128A104 104 0 1 1 128 24a104.11 104.11 0 0 1 104 104m-16 0a88 88 0 1 0-88 88a88.1 88.1 0 0 0 88-88"/></g></svg></span>
+        <span style="display: flex; flex-direction: column; gap: 2px; font-size: 14px"><b style="font-weight: 600">F29 presentado</b><span style="color: #4A5068">Pagaste $412.300 de IVA este mes.</span></span>
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 12px; min-width: 0">
+      <h3 style="margin: 0; font-size: clamp(26px, 3vw, 36px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1">Te avisamos antes de que te afecte</h3>
+      <p style="margin: 0; font-size: 17px; color: #4A5068">Cada cambio tributario y cada vencimiento, explicado para tu tienda.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARACIÓN COMPLETA -->
+<section class="wrap" style="padding-block: 40px 88px; display: flex; flex-direction: column; gap: 24px">
+  <h2 style="margin: 0; font-weight: 600; font-size: clamp(28px, 3.4vw, 40px); letter-spacing: -0.03em">Compara todas las funciones</h2>
+  <div style="overflow-x: auto; border: 1px solid #E3E1DA; border-radius: 24px">
+    <table class="cmp">
+      <thead><tr><th scope="col" style="text-align: left; font-weight: 500; color: #6B7085; font-size: 13px">Planes</th><th scope="col">Arranque<br><span style="font-size: 13px; font-weight: 400; color: #6B7085">$80.000</span></th><th scope="col">Básico<br><span style="font-size: 13px; font-weight: 400; color: #6B7085">3 UF</span></th><th scope="col" class="hl">Medio<br><span style="font-size: 13px; font-weight: 400; color: #6B7085">4,5 UF</span></th><th scope="col">Experto<br><span style="font-size: 13px; font-weight: 400; color: #6B7085">7 UF</span></th></tr></thead>
+      <tbody>
+        <tr class="grp"><th scope="rowgroup" colspan="5" style="text-align: left; background: #F2ECE1; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: #4A5068">Tu tienda</th></tr>
+        <tr><th scope="row">Ventas mensuales</th><td>hasta $5 M</td><td>hasta $10 M</td><td class="hl">$10 a $25 M</td><td>$25 a $60 M</td></tr>
+        <tr><th scope="row">Pensado para</th><td>Tiendas que parten</td><td>Tiendas estables</td><td class="hl">Tiendas con Meta Ads</td><td>Varios canales</td></tr>
+        <tr class="grp"><th scope="rowgroup" colspan="5" style="text-align: left; background: #F2ECE1; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: #4A5068">Contabilidad e impuestos</th></tr>
+        <tr><th scope="row">F29 y contabilidad al día</th><td class="yes">✓</td><td class="yes">✓</td><td class="yes hl">✓</td><td class="yes">✓</td></tr>
+        <tr><th scope="row">Operación Renta</th><td>Aparte</td><td>50% dcto.</td><td class="hl">Incluida</td><td>Incluida</td></tr>
+        <tr><th scope="row">Planificación tributaria semestral</th><td class="no">—</td><td class="no">—</td><td class="no hl">—</td><td class="yes">✓</td></tr>
+        <tr class="grp"><th scope="rowgroup" colspan="5" style="text-align: left; background: #F2ECE1; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: #4A5068">E-commerce</th></tr>
+        <tr><th scope="row">Facturas de compra de Meta, Google y Shopify</th><td class="yes">✓</td><td class="yes">✓</td><td class="yes hl">✓</td><td class="yes">✓</td></tr>
+        <tr><th scope="row">Cuadre de ventas vs boletas</th><td class="no">—</td><td class="yes">✓</td><td class="yes hl">✓</td><td class="yes">✓</td></tr>
+        <tr><th scope="row">Conciliación de pasarelas y banco</th><td class="no">—</td><td class="no">—</td><td class="yes hl">✓</td><td class="yes">✓</td></tr>
+        <tr><th scope="row">Metas de inversión en Meta</th><td class="no">—</td><td class="no">—</td><td class="yes hl">✓</td><td class="yes">✓</td></tr>
+        <tr class="grp"><th scope="rowgroup" colspan="5" style="text-align: left; background: #F2ECE1; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: #4A5068">Reportes</th></tr>
+        <tr><th scope="row">Reporte de utilidad</th><td>Mensual</td><td>Mensual</td><td class="hl"><b>Semanal</b></td><td><b>Semanal</b></td></tr>
+        <tr><th scope="row">Margen por canal y producto</th><td class="no">—</td><td class="no">—</td><td class="no hl">—</td><td class="yes">✓</td></tr>
+        <tr class="grp"><th scope="rowgroup" colspan="5" style="text-align: left; background: #F2ECE1; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: #4A5068">Personas</th></tr>
+        <tr><th scope="row">Trabajadores incluidos</th><td class="no">—</td><td>1</td><td class="hl">Consultar</td><td>Consultar</td></tr>
+        <tr class="grp"><th scope="rowgroup" colspan="5" style="text-align: left; background: #F2ECE1; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: #4A5068">Atención</th></tr>
+        <tr><th scope="row">Respuestas por WhatsApp</th><td>48 h hábiles</td><td>48 h hábiles</td><td class="hl">24 h hábiles</td><td>Mismo día</td></tr>
+        <tr><th scope="row">Biblioteca de clases y avisos del SII</th><td class="yes">✓</td><td class="yes">✓</td><td class="yes hl">✓</td><td class="yes">✓</td></tr>
+        <tr><th scope="row" style="border-bottom: 0">Reunión mensual</th><td class="no" style="border-bottom: 0">—</td><td class="no" style="border-bottom: 0">—</td><td class="no hl" style="border-bottom: 0">—</td><td class="yes" style="border-bottom: 0">✓</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- RODOLFO: simple -->
+<section id="rodolfo" class="wrap" style="padding-block: 24px 88px">
+  <div style="display: flex; align-items: center; gap: 28px; flex-wrap: wrap; padding: 32px; border-radius: 24px; border: 1px solid #E3E1DA">
+    <img src="/rodolfo.jpg" alt="Rodolfo Navarro" width="96" height="96" style="width: 96px; height: 96px; border-radius: 50%; object-fit: cover; object-position: 50% 22%; flex: none">
+    <div style="display: flex; flex-direction: column; gap: 6px; flex: 1 1 360px; min-width: 0">
+      <p style="margin: 0; font-size: 22px; font-weight: 600; letter-spacing: -0.02em">Un contador que también tiene una tienda online.</p>
+      <p style="margin: 0; font-size: 16px; color: #4A5068">Soy Rodolfo Navarro, cofundador de GALIA. Vivo lo mismo que tú: el Cyber, el ROAS y los quiebres de stock.</p>
+    </div>
+    <a href="https://rodolfo.cl" style="font-weight: 500; font-size: 15px">rodolfo.cl →</a>
+  </div>
+</section>
+
+<!-- NEWSLETTER con gráfica -->
+<section id="newsletter" style="background: #F2ECE1">
+  <div class="wrap split" style="padding-block: 88px">
+    <div style="display: flex; flex-direction: column; gap: 20px; min-width: 0">
+      <p style="margin: 0; font-size: 13px; font-weight: 500; color: #0034D3">Newsletter semanal · gratis</p>
+      <h2 style="margin: 0; font-weight: 600; font-size: clamp(32px, 4vw, 48px); line-height: 1.05; letter-spacing: -0.035em">Números Claros</h2>
+      <p style="margin: 0; font-size: 17px; color: #4A5068; max-width: 40ch">Lo nuevo del SII y del e-commerce, en 5 minutos. Cada martes.</p>
+      <form data-nl-form data-account={MAILERLITE_ACCOUNT_ID} data-form={MAILERLITE_FORM_ID} novalidate style="display: flex; gap: 8px; flex-wrap: wrap">
+        <label for="nl-email" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Tu correo</label>
+        <input id="nl-email" name="email" type="email" autocomplete="email" required placeholder="nombre@tutienda.cl" style="flex: 1 1 220px; min-height: 52px; padding: 0 16px; font: inherit; font-size: 16px; border: 1px solid #D2CFC6; border-radius: 14px; background: #FFFFFF; color: #0B1533">
+        <button type="submit" style="min-height: 52px; padding: 0 22px; border: 0; border-radius: 14px; background: #0034D3; color: #FFFFFF; font: inherit; font-weight: 500; font-size: 16px; cursor: pointer">Suscribirme</button>
+        <label style="flex: 1 1 100%; display: flex; gap: 8px; align-items: flex-start; font-size: 13px; color: #6B7085"><input type="checkbox" name="consent" required style="margin-top: 2px; width: 18px; height: 18px; flex: none">Acepto recibir el newsletter. Me puedo desuscribir cuando quiera. <a href="/privacidad" style="color: inherit">Privacidad</a>.</label>
+        <p class="nl-status" role="status" aria-live="polite" style="flex: 1 1 100%; margin: 0; font-size: 14px; color: #0034D3"></p>
+      </form>
+    </div>
+    <!-- bandeja de entrada -->
+    <div style="position: relative; min-width: 0"><svg class="dd draw" aria-hidden="true" viewBox="0 0 100 100" width="80" height="80" style="position: absolute; color: #0034D3; left: -36px; top: -36px; z-index: 1"><path pathLength="1" d="M52 50 a4 4 0 1 0 -4 4 a10 10 0 1 0 10 -10 a18 18 0 1 0 -18 18 a26 26 0 1 0 26 -26"/></svg><svg class="dd draw" aria-hidden="true" viewBox="0 0 100 100" width="64" height="64" style="position: absolute; color: #99CCFF; right: -22px; bottom: -28px; z-index: 1; transform: rotate(12deg)"><path pathLength="1" d="M26 12 L74 12 L74 84 L66 78 L58 84 L50 78 L42 84 L34 78 L26 84 Z"/><path pathLength="1" d="M38 32 L62 32"/><path pathLength="1" d="M38 48 L56 48"/></svg>
+    <div style="position: relative; border-radius: 24px; background: #FFFFFF; padding: 12px; box-shadow: 0 30px 60px -36px rgba(14,21,18,0.35); display: flex; flex-direction: column; min-width: 0">
+      <div style="display: flex; align-items: center; gap: 8px; padding: 10px 12px 14px; font-size: 13px; color: #6B7085">
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 256 256"><g fill="currentColor"><path d="m224 56l-96 88l-96-88Z" opacity=".2"/><path d="M224 48H32a8 8 0 0 0-8 8v136a16 16 0 0 0 16 16h176a16 16 0 0 0 16-16V56a8 8 0 0 0-8-8m-20.57 16L128 133.15L52.57 64ZM216 192H40V74.19l82.59 75.71a8 8 0 0 0 10.82 0L216 74.19z"/></g></svg>
+        Bandeja de entrada
+      </div>
+      <div style="display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 14px 12px; border-radius: 14px; background: #EAF1FF">
+        <span aria-hidden="true" style="width: 40px; height: 40px; border-radius: 12px; background: #0034D3; color: #FFFFFF; display: grid; place-items: center; font-weight: 600; font-size: 14px">NC</span>
+        <span style="display: flex; flex-direction: column; min-width: 0"><b style="font-size: 14px; font-weight: 600">Números Claros #12</b><span style="font-size: 13px; color: #4A5068; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">Cyber: cuánto puedes invertir en Meta sin perder</span></span>
+        <span style="font-size: 12px; color: #6B7085">mar</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 14px 12px; border-bottom: 1px solid #ECE7DD">
+        <span aria-hidden="true" style="width: 40px; height: 40px; border-radius: 12px; background: #D6E4FF; color: #0034D3; display: grid; place-items: center; font-weight: 600; font-size: 14px">NC</span>
+        <span style="display: flex; flex-direction: column; min-width: 0"><b style="font-size: 14px; font-weight: 500">Números Claros #11</b><span style="font-size: 13px; color: #6B7085; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">Factura de compra: el error que más multas trae</span></span>
+        <span style="font-size: 12px; color: #6B7085">mar</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 14px 12px">
+        <span aria-hidden="true" style="width: 40px; height: 40px; border-radius: 12px; background: #D6E4FF; color: #0034D3; display: grid; place-items: center; font-weight: 600; font-size: 14px">NC</span>
+        <span style="display: flex; flex-direction: column; min-width: 0"><b style="font-size: 14px; font-weight: 500">Números Claros #10</b><span style="font-size: 13px; color: #6B7085; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">Tu ticket promedio dice más de lo que crees</span></span>
+        <span style="font-size: 12px; color: #6B7085">mar</span>
+      </div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- PREGUNTAS -->
+<section id="preguntas" class="wrap" style="padding-block: 72px 24px; display: flex; flex-direction: column; gap: 24px; max-width: 900px">
+  <h2 style="margin: 0; font-weight: 600; font-size: clamp(28px, 3.4vw, 40px); letter-spacing: -0.03em">Preguntas frecuentes</h2>
+  <div style="border-top: 1px solid #E3E1DA">
+    {FAQS.map((f) => (
+      <details style="border-bottom: 1px solid #E3E1DA; padding-block: 18px"><summary style="cursor: pointer; font-size: 18px; font-weight: 500">{f.q}</summary><p style="margin: 10px 0 0; font-size: 16px; line-height: 1.55; color: #4A5068">{f.a}</p></details>
+    ))}
+  </div>
+</section>
+
+<!-- CTA con iconografía -->
+<section class="wrap" style="padding-block: 88px 48px">
+  <div style="position: relative; overflow: hidden; border-radius: 28px; background: #0034D3; color: #FFFFFF; padding: clamp(32px, 6vw, 72px); display: flex; flex-direction: column; align-items: flex-start; gap: 22px">
+    <div class="float" aria-hidden="true" style="position: absolute; inset: 0"><svg class="dd draw" aria-hidden="true" viewBox="0 0 100 100" width="110" height="110" style="position: absolute; color: #99CCFF; right: 300px; top: 30px; transform: rotate(-8deg)"><path pathLength="1" d="M10 22 L24 22 L34 62 L74 62 L84 34 L28 34"/><circle pathLength="1" cx="40" cy="80" r="6"/><circle pathLength="1" cx="68" cy="80" r="6"/></svg><svg class="dd draw" aria-hidden="true" viewBox="0 0 100 100" width="130" height="130" style="position: absolute; color: #FFFFFF; right: 120px; top: 40px"><path pathLength="1" d="M10 76 L32 52 L48 64 L82 28"/><path pathLength="1" d="M62 26 L84 26 L84 48"/></svg><svg class="dd draw" aria-hidden="true" viewBox="0 0 100 100" width="90" height="90" style="position: absolute; color: #99CCFF; right: 40px; bottom: 30px; transform: rotate(12deg)"><path pathLength="1" d="M68 30 C 54 16, 26 22, 34 40 C 40 54, 72 48, 66 68 C 60 84, 34 80, 28 68"/><path pathLength="1" d="M50 12 L50 88"/></svg><svg class="dd draw" aria-hidden="true" viewBox="0 0 100 100" width="96" height="96" style="position: absolute; color: #FFFFFF; right: 240px; bottom: 20px"><path pathLength="1" d="M52 50 a4 4 0 1 0 -4 4 a10 10 0 1 0 10 -10 a18 18 0 1 0 -18 18 a26 26 0 1 0 26 -26"/></svg></div>
+    <h2 style="position: relative; margin: 0; font-weight: 600; font-size: clamp(32px, 4.6vw, 56px); line-height: 1.02; letter-spacing: -0.04em; max-width: 14ch">¿Tu tienda está ganando dinero?</h2>
+    <p style="position: relative; margin: 0; font-size: 18px; color: #C9DCFF; max-width: 36ch">Cuéntanos dónde vendes y lo revisamos contigo.</p>
+    <a href={wa} style="position: relative; display: inline-flex; align-items: center; min-height: 52px; padding: 0 24px; border-radius: 14px; background: #FFFFFF; color: #0B1533; text-decoration: none; font-weight: 500; font-size: 16px">Averigüémoslo por WhatsApp</a>
+  </div>
+  <footer style="display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-top: 32px; font-size: 14px; color: #6B7085">
+    <span style="font-family: 'Host Grotesk', sans-serif; font-size: 18px; letter-spacing: -0.04em; color: #0B1533"><b style="font-weight: 700">contador</b><b style="font-weight: 700; color: #0034D3">.</b><span style="font-weight: 400">ecommerce</span> <span style="font-family: 'Geist', sans-serif; font-size: 14px; letter-spacing: 0; color: #6B7085">· Santiago, Chile</span></span>
+    <span>rodolfo@contadorecommerce.cl</span>
+  </footer>
+</section>
+
+</div>
+
+<script>
+  const forms = document.querySelectorAll<HTMLFormElement>('[data-nl-form]');
+  forms.forEach((form) => {
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const status = form.querySelector<HTMLElement>('.nl-status')!;
+      const email = (form.elements.namedItem('email') as HTMLInputElement).value.trim();
+      const consent = (form.elements.namedItem('consent') as HTMLInputElement).checked;
+      const account = form.dataset.account;
+      const formId = form.dataset.form;
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        status.textContent = 'Revisa tu correo, parece que tiene un error.';
+        return;
+      }
+      if (!consent) {
+        status.textContent = 'Marca la casilla para aceptar el envío del newsletter.';
+        return;
+      }
+      if (!account || !formId) {
+        status.textContent = 'El newsletter abre muy pronto. ¡Gracias por tu interés!';
+        return;
+      }
+
+      status.textContent = 'Enviando…';
+      try {
+        const body = new FormData();
+        body.append('fields[email]', email);
+        body.append('ml-submit', '1');
+        body.append('anticsrf', 'true');
+        const res = await fetch(`https://assets.mailerlite.com/jsonp/${account}/forms/${formId}/subscribe`, {
+          method: 'POST',
+          body,
+        });
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && data.success) {
+          form.reset();
+          status.textContent = '¡Listo! Ya estás suscrito. El próximo Números Claros llega a tu correo.';
+        } else if (data?.errors?.fields?.email) {
+          status.textContent = 'Revisa tu correo, parece que tiene un error.';
+        } else {
+          status.textContent = 'No pudimos suscribirte. Intenta de nuevo en un rato.';
+        }
+      } catch {
+        status.textContent = 'No pudimos suscribirte. Revisa tu conexión e intenta de nuevo.';
+      }
+    });
+  });
+</script>
+</Landing>
