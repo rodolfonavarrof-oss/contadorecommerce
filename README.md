@@ -7,7 +7,7 @@ Sitio de Contador Ecommerce hecho en Astro. Se publica en Cloudflare.
 Completa en `src/config.ts`:
 
 - `WHATSAPP_NUMBER`: número de WhatsApp Business, solo dígitos con código de país (ej. 569XXXXXXXX). Mientras esté vacío, los botones llevan al final de la portada.
-- `KLAVIYO_PUBLIC_KEY` y `KLAVIYO_LIST_ID`: clave pública de Klaviyo y el ID de la lista del newsletter. Mientras estén vacíos, el formulario muestra "El newsletter abre muy pronto".
+- `MAILERLITE_ACCOUNT_ID` y `MAILERLITE_FORM_ID`: formulario de MailerLite que suscribe al grupo "Leads newsletter" (ya configurado).
 
 Y en `src/pages/privacidad.astro` y `src/pages/terminos.astro`, los datos entre corchetes (razón social, RUT, correo, plazos).
 

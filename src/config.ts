@@ -18,9 +18,10 @@ export const SITE = {
 // Número de WhatsApp Business con código de país, solo dígitos.
 export const WHATSAPP_NUMBER = '56978000715';
 
-// PENDIENTE: clave pública de Klaviyo (Company ID, 6 caracteres) y el ID de la lista "Leads newsletter".
-export const KLAVIYO_PUBLIC_KEY = '';
-export const KLAVIYO_LIST_ID = '';
+// Formulario "Web contadorecommerce.cl - Newsletter" de MailerLite (suscribe al grupo "Leads newsletter",
+// con doble confirmación). Estos IDs son públicos: no son claves de API.
+export const MAILERLITE_ACCOUNT_ID = '2743908';
+export const MAILERLITE_FORM_ID = '202408847845885317';
 
 export function whatsappLink(text = 'Hola, quiero saber más sobre Contador Ecommerce') {
   if (!/^\d{10,13}$/.test(WHATSAPP_NUMBER)) return '#contacto';
