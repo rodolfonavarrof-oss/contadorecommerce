@@ -1,0 +1,36 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Newsletter from '../../components/Newsletter.astro';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+const fmt = new Intl.DateTimeFormat('es-CL', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+---
+<Base
+  title="Blog"
+  description="Artículos y ediciones del newsletter Números Claros: impuestos, facturas de compra, ROAS y rentabilidad para dueños de tiendas online en Chile."
+>
+  <section class="narrow section stack" style="gap: 32px">
+    <div class="stack" style="gap: 12px">
+      <p class="eyebrow">Blog · Números Claros</p>
+      <h1 class="h1" style="font-size: clamp(36px, 5vw, 52px)">Contabilidad de tiendas online, explicada en simple.</h1>
+      <p class="lead" style="font-size: 18px">Cada semana publicamos lo nuevo del SII y del e-commerce, y respondemos las preguntas que más nos hacen los dueños de tienda.</p>
+    </div>
+    {posts.length === 0 ? (
+      <p class="muted" style="margin: 0">Las primeras ediciones se publican muy pronto. Suscríbete abajo para recibirlas.</p>
+    ) : (
+      <ul class="post-list">
+        {posts.map((post) => (
+          <li>
+            <p class="small"><time datetime={post.data.date.toISOString()}>{fmt.format(post.data.date)}</time></p>
+            <h2 class="h3" style="font-size: 22px"><a href={`/blog/${post.id}`}>{post.data.title}</a></h2>
+            <p class="muted">{post.data.description}</p>
+          </li>
+        ))}
+      </ul>
+    )}
+  </section>
+  <Newsletter />
+</Base>

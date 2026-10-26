@@ -1,0 +1,108 @@
+---
+import '../styles/global.css';
+import { SITE, whatsappLink } from '../config';
+
+interface Props {
+  title: string;
+  description?: string;
+  schema?: object[];
+  type?: 'website' | 'article';
+  noindex?: boolean;
+}
+
+const { title, description = SITE.description, schema = [], type = 'website', noindex = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
+const fullTitle = title === SITE.name ? `${SITE.name} · ${SITE.tagline}` : `${title} · ${SITE.name}`;
+const wa = whatsappLink();
+
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'AccountingService',
+  '@id': `${SITE.url}/#negocio`,
+  name: SITE.name,
+  url: SITE.url,
+  description: SITE.description,
+  areaServed: { '@type': 'Country', name: 'Chile' },
+  address: { '@type': 'PostalAddress', addressLocality: SITE.city, addressCountry: SITE.country },
+  founder: {
+    '@type': 'Person',
+    '@id': `${SITE.founder.url}/#persona`,
+    name: SITE.founder.name,
+    jobTitle: SITE.founder.role,
+    url: SITE.founder.url,
+  },
+  knowsAbout: [
+    'Contabilidad para e-commerce',
+    'Factura de compra de servicios digitales',
+    'IVA y F29',
+    'Shopify',
+    'Mercado Libre',
+    'ROAS y rentabilidad de tiendas online',
+  ],
+};
+---
+<!doctype html>
+<html lang="es-CL">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{fullTitle}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  {noindex && <meta name="robots" content="noindex" />}
+  <meta property="og:type" content={type} />
+  <meta property="og:site_name" content={SITE.name} />
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:locale" content="es_CL" />
+  <meta name="twitter:card" content="summary" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="sitemap" href="/sitemap-index.xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" />
+  <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
+  {schema.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
+</head>
+<body>
+  <header class="site-header">
+    <nav class="container nav" aria-label="Principal">
+      <a href="/" class="brand">
+        <span class="brand-name">Contador Ecommerce</span>
+        <span class="brand-country">Chile</span>
+      </a>
+      <div class="nav-links">
+        <a href="/#planes">Planes</a>
+        <a href="/#como-funciona">Cómo funciona</a>
+        <a href="/#rodolfo">Quién está detrás</a>
+        <a href="/blog">Blog</a>
+        <a href="/#newsletter">Newsletter</a>
+        <a href={wa} class="btn btn-primary btn-sm">Hablemos por WhatsApp</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <slot />
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Contador Ecommerce · contabilidad para tiendas online en Chile · Santiago</p>
+      <div class="footer-links">
+        <a href="/blog">Blog</a>
+        <a href="/diagnostico">Diagnóstico gratis</a>
+        <a href="/#newsletter">Newsletter</a>
+        <a href={SITE.founder.url}>rodolfo.cl</a>
+        <a href="/privacidad">Privacidad</a>
+        <a href="/terminos">Términos</a>
+      </div>
+    </div>
+  </footer>
+
+  <a href={wa} class="wa-float" aria-label="Escríbenos por WhatsApp">
+    <svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.4A8.4 8.4 0 1 1 21 11.5z"></path></svg>
+  </a>
+</body>
+</html>

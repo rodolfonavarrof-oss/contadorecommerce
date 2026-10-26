@@ -1,0 +1,78 @@
+---
+import { KLAVIYO_PUBLIC_KEY, KLAVIYO_LIST_ID } from '../config';
+---
+<section id="newsletter" class="section" style="border-bottom: 1px solid var(--line)">
+  <div class="container newsletter">
+    <div class="stack">
+      <p class="eyebrow">Newsletter semanal · Números Claros</p>
+      <h2 class="h2" style="max-width: 22ch">Lo nuevo del SII y del e-commerce, explicado en 5 minutos.</h2>
+      <p class="lead" style="max-width: 48ch; font-size: 18px">Cada semana: el cambio tributario que te afecta, un número de tu negocio que conviene mirar y una pregunta real de un dueño de tienda, respondida.</p>
+    </div>
+    <form class="nl-form" data-nl-form data-key={KLAVIYO_PUBLIC_KEY} data-list={KLAVIYO_LIST_ID} novalidate>
+      <label for="nl-email">Tu correo</label>
+      <div class="nl-fields">
+        <input id="nl-email" name="email" type="email" autocomplete="email" placeholder="nombre@tutienda.cl" required />
+        <button type="submit" class="btn btn-primary">Suscribirme</button>
+      </div>
+      <label class="nl-consent">
+        <input type="checkbox" name="consent" required />
+        <span>Acepto recibir el newsletter de Contador Ecommerce por correo. Me puedo desuscribir cuando quiera. <a href="/privacidad" style="color: inherit">Política de privacidad</a>.</span>
+      </label>
+      <p class="nl-status" role="status" aria-live="polite"></p>
+      <p class="small">Gratis, un correo a la semana. <a href="/blog" style="color: inherit">Ver ediciones anteriores en el blog</a>.</p>
+    </form>
+  </div>
+</section>
+
+<script>
+  const forms = document.querySelectorAll<HTMLFormElement>('[data-nl-form]');
+  forms.forEach((form) => {
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const status = form.querySelector<HTMLElement>('.nl-status')!;
+      const email = (form.elements.namedItem('email') as HTMLInputElement).value.trim();
+      const consent = (form.elements.namedItem('consent') as HTMLInputElement).checked;
+      const key = form.dataset.key;
+      const list = form.dataset.list;
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        status.textContent = 'Revisa tu correo, parece que tiene un error.';
+        return;
+      }
+      if (!consent) {
+        status.textContent = 'Marca la casilla para aceptar el envío del newsletter.';
+        return;
+      }
+      if (!key || !list) {
+        status.textContent = 'El newsletter abre muy pronto. ¡Gracias por tu interés!';
+        return;
+      }
+
+      status.textContent = 'Enviando…';
+      try {
+        const res = await fetch(`https://a.klaviyo.com/client/subscriptions?company_id=${encodeURIComponent(key)}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/vnd.api+json', revision: '2024-10-15' },
+          body: JSON.stringify({
+            data: {
+              type: 'subscription',
+              attributes: {
+                custom_source: 'Web contadorecommerce.cl',
+                profile: { data: { type: 'profile', attributes: { email } } },
+              },
+              relationships: { list: { data: { type: 'list', id: list } } },
+            },
+          }),
+        });
+        if (res.ok || res.status === 202) {
+          form.reset();
+          status.textContent = '¡Listo! Revisa tu correo para confirmar la suscripción.';
+        } else {
+          status.textContent = 'No pudimos suscribirte. Intenta de nuevo en un rato.';
+        }
+      } catch {
+        status.textContent = 'No pudimos suscribirte. Revisa tu conexión e intenta de nuevo.';
+      }
+    });
+  });
+</script>

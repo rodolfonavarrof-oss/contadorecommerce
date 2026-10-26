@@ -1,0 +1,236 @@
+---
+import Base from '../layouts/Base.astro';
+import Newsletter from '../components/Newsletter.astro';
+import { SITE, PLANS, FAQS, whatsappLink } from '../config';
+
+const wa = whatsappLink();
+
+const offerSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Contabilidad para tiendas online',
+  serviceType: 'Contabilidad y asesoría tributaria para e-commerce',
+  provider: { '@id': `${SITE.url}/#negocio` },
+  areaServed: { '@type': 'Country', name: 'Chile' },
+  offers: PLANS.map((p) => ({
+    '@type': 'Offer',
+    name: `Plan ${p.name}`,
+    description: p.audience,
+    price: p.priceValue,
+    priceCurrency: p.currency,
+    priceSpecification: {
+      '@type': 'UnitPriceSpecification',
+      price: p.priceValue,
+      priceCurrency: p.currency,
+      unitText: 'MONTH',
+      valueAddedTaxIncluded: false,
+    },
+  })),
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: FAQS.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+<Base title={SITE.name} schema={[offerSchema, faqSchema]}>
+  <section class="container hero" id="inicio">
+    <div class="hero-copy">
+      <p class="eyebrow">Contabilidad para tiendas online en Chile</p>
+      <h1 class="h1">Tus números claros cada mes. Y entiendes por qué.</h1>
+      <p class="lead">Llevamos tu contabilidad al día y te enseñamos a leerla. En pocos meses sabes cuánto ganas, cómo se mueve tu negocio y cuánto puedes invertir.</p>
+      <div class="actions">
+        <a href={wa} class="btn btn-primary">
+          <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.4A8.4 8.4 0 1 1 21 11.5z"></path></svg>
+          Hablemos por WhatsApp
+        </a>
+        <a href="/diagnostico" class="btn btn-outline">Haz el diagnóstico gratis</a>
+      </div>
+      <p class="small">Para tiendas en Shopify, Jumpseller, WooCommerce y Mercado Libre.</p>
+    </div>
+
+    <div>
+      <figure class="report" style="margin: 0" aria-label="Ejemplo de reporte de utilidad mensual">
+        <div class="report-head">
+          <p style="font-weight: 600">Reporte de utilidad · Septiembre</p>
+          <p class="tag">Datos de ejemplo</p>
+        </div>
+        <dl>
+          <div class="first"><dt>Ventas netas</dt><dd>$12.400.000</dd></div>
+          <div><dt>Costo de producto</dt><dd>−$4.960.000</dd></div>
+          <div><dt>Inversión en Meta</dt><dd>−$2.100.000</dd></div>
+          <div><dt>Comisiones de pasarelas</dt><dd>−$390.000</dd></div>
+          <div class="last"><dt>Costos fijos</dt><dd>−$2.300.000</dd></div>
+          <div class="total"><dt>Utilidad del mes</dt><dd>$2.650.000</dd></div>
+        </dl>
+        <div class="kpis">
+          <div class="kpi"><p class="kpi-label">ROAS del mes</p><p class="kpi-value">5,9</p></div>
+          <div class="kpi"><p class="kpi-label">ROAS de equilibrio</p><p class="kpi-value">1,8</p></div>
+        </div>
+        <figcaption class="small" style="margin-top: 16px; color: var(--ink-2)">Bajo un ROAS de 1,8 cada peso en Meta te hace perder plata. Este mes estás muy por encima.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="strip" aria-label="Plataformas con las que trabajamos">
+    <div class="container">
+      <span>Trabajamos con</span>
+      <span>Shopify</span><span>Jumpseller</span><span>WooCommerce</span><span>Mercado Libre</span><span>Mercado Pago</span><span>Flow</span><span>Webpay</span><span>Meta Ads</span><span>Google Ads</span>
+    </div>
+  </section>
+
+  <section class="container" style="padding-block: 96px 48px">
+    <div class="stack" style="gap: 40px">
+      <h2 class="h2" style="max-width: 18ch">¿Te suena alguna de estas?</h2>
+      <div class="row">
+        <blockquote class="quote">“Mi contador no sabe de Meta ni de Google.”</blockquote>
+        <blockquote class="quote">“Solo me avisa cuánto tengo que pagar.”</blockquote>
+        <blockquote class="quote">“No sé si este mes gané o perdí plata.”</blockquote>
+      </div>
+      <p class="muted" style="margin: 0; font-size: 18px; max-width: 60ch">Es lo que más nos dicen los dueños de tienda. No es culpa tuya: la mayoría de los contadores no trabaja con tiendas online y no conoce cómo se declaran Meta, Shopify o las pasarelas de pago.</p>
+    </div>
+  </section>
+
+  <section class="container" style="padding-block: 48px 96px">
+    <div class="stack" style="gap: 40px">
+      <div class="stack" style="gap: 12px">
+        <p class="eyebrow">Lo que recibes cada mes</p>
+        <h2 class="h2" style="max-width: 22ch">Tu contabilidad al día y tus números de negocio, en un solo lugar.</h2>
+      </div>
+      <div class="row">
+        <article class="deliverable">
+          <p class="num">01</p>
+          <h3 class="h3">Impuestos al día</h3>
+          <p class="muted">F29, libros y declaraciones a tiempo. Te mostramos qué pagas y por qué antes de presentar.</p>
+        </article>
+        <article class="deliverable">
+          <p class="num">02</p>
+          <h3 class="h3">Facturas de compra de Meta, Google y Shopify</h3>
+          <p class="muted">Las emitimos todos los meses con el dólar observado de cada cargo. Es lo que más se olvida y lo que más multas trae.</p>
+        </article>
+        <article class="deliverable">
+          <p class="num">03</p>
+          <h3 class="h3">Todo cuadra</h3>
+          <p class="muted">Cruzamos lo que vendió tu tienda con tus boletas y lo que te depositaron Mercado Pago, Flow o Webpay.</p>
+        </article>
+        <article class="deliverable accent">
+          <p class="num">04</p>
+          <h3 class="h3">Tu reporte de utilidad</h3>
+          <p class="muted">Cuánto ganaste, tu ROAS de equilibrio y cuánto puedes invertir en Meta sin perder plata.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="aprendes" class="container" style="padding-bottom: 96px">
+    <div class="learn">
+      <div class="stack" style="gap: 12px">
+        <p class="eyebrow">Aprendes tu negocio</p>
+        <h2 class="h2" style="max-width: 24ch">No solo te llevamos los números. Te enseñamos a leerlos.</h2>
+        <p class="muted" style="margin: 0; font-size: 18px; max-width: 60ch">Lo vemos con nuestros clientes: entre 3 y 6 meses después de partir, entienden cómo funciona su negocio por dentro y solo nos escriben por dudas puntuales. Es contabilidad y es una inversión en ti.</p>
+      </div>
+      <div class="row">
+        <article class="card">
+          <h3 class="h3">Biblioteca de clases grabadas</h3>
+          <p class="muted">Cada duda frecuente tiene su clase corta: factura de compra, ROAS mínimo, costo de producto, F29 y más. Disponible cuando la necesites.</p>
+        </article>
+        <article class="card">
+          <h3 class="h3">Cambios tributarios, explicados</h3>
+          <p class="muted">Cada novedad del SII que afecta a tu tienda te llega en simple: qué cambia, desde cuándo y qué tienes que hacer.</p>
+        </article>
+        <article class="card">
+          <h3 class="h3">Tu reporte, con video</h3>
+          <p class="muted">Cada mes, un video corto con tus números: qué pasó, por qué y qué conviene mirar el mes siguiente.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="como-funciona" class="dark">
+    <div class="container section stack" style="gap: 48px">
+      <h2 class="h2">Cómo funciona</h2>
+      <ol class="steps">
+        <li>
+          <span class="step-num" aria-hidden="true">1</span>
+          <h3 class="h3">Conversamos por WhatsApp</h3>
+          <p>Nos cuentas dónde vendes, cuánto vendes y cómo llevas hoy tu contabilidad.</p>
+        </li>
+        <li>
+          <span class="step-num" aria-hidden="true">2</span>
+          <h3 class="h3">Te ponemos al día</h3>
+          <p>Revisamos meses atrasados y facturas de compra pendientes. Te cotizamos antes de hacer nada.</p>
+        </li>
+        <li>
+          <span class="step-num" aria-hidden="true">3</span>
+          <h3 class="h3">Cada mes, tus números</h3>
+          <p>Impuestos presentados, todo cuadrado y tu reporte de utilidad. Y si tienes una duda, te respondemos.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="planes" class="container section stack" style="gap: 40px">
+    <div class="stack" style="gap: 12px">
+      <h2 class="h2">Planes</h2>
+      <p class="muted" style="margin: 0; font-size: 18px">Precios mensuales + IVA. Sin contrato de permanencia.</p>
+    </div>
+    <div class="plans">
+      {PLANS.map((p) => (
+        <article class={p.featured ? 'plan featured' : 'plan'}>
+          <div>
+            {p.featured && <p class="badge">Recomendado</p>}
+            <h3 class="h3">{p.name}</h3>
+            <p class="small" style="margin-top: 4px">{p.audience}</p>
+          </div>
+          <p class="price">{p.price} <small>+ IVA</small></p>
+          <ul>{p.features.map((f) => <li>{f}</li>)}</ul>
+          {p.note && <p class="note">{p.note}</p>}
+        </article>
+      ))}
+    </div>
+    <p style="margin: 0; font-size: 15px" class="muted">¿No sabes qué plan te corresponde? <a href={wa} style="font-weight: 600">Escríbenos y te decimos.</a></p>
+  </section>
+
+  <section id="rodolfo" style="background: var(--soft); border-block: 1px solid var(--line)">
+    <div class="container section about">
+      <div class="photo" role="img" aria-label="Foto de Rodolfo Navarro, pendiente">[FOTO DE RODOLFO]</div>
+      <div class="about-copy">
+        <p class="eyebrow">Quién está detrás</p>
+        <h2 class="h2" style="font-size: clamp(30px, 3.8vw, 40px)">Un contador que también tiene una tienda online.</h2>
+        <p>Soy Rodolfo Navarro, contador y cofundador de GALIA, marca de diseño de autor. Llevo la contabilidad de tiendas online y vivo lo mismo que tú: el Cyber, el ROAS, los meses con quiebre de stock.</p>
+        <p>Por eso sé lo que necesitas de un contador: números claros, todo en orden y respuestas cuando las pides.</p>
+        <a href={SITE.founder.url} style="font-weight: 600">Conoce más en rodolfo.cl</a>
+      </div>
+    </div>
+  </section>
+
+  <Newsletter />
+
+  <section id="preguntas" class="narrow section stack" style="gap: 32px">
+    <h2 class="h2">Preguntas frecuentes</h2>
+    <div class="faq">
+      {FAQS.map((f) => (
+        <details>
+          <summary>{f.q}</summary>
+          <p>{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section id="contacto" class="container" style="padding-bottom: 96px">
+    <div class="cta">
+      <h2 class="h2" style="max-width: 20ch">¿Quieres saber si tu tienda está ganando plata?</h2>
+      <p>Escríbenos, cuéntanos dónde vendes y te decimos cómo te podemos ayudar.</p>
+      <a href={wa} class="btn btn-white">
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.4A8.4 8.4 0 1 1 21 11.5z"></path></svg>
+        Hablemos por WhatsApp
+      </a>
+    </div>
+  </section>
+</Base>
